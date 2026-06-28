@@ -67,8 +67,17 @@ def test_audit_is_range_partitioned(offline_sql: str) -> None:
 
 
 def test_foreign_keys_present(offline_sql: str) -> None:
-    # 22 foreign key constraints in revision 0003.
-    assert offline_sql.count("add constraint fk_") == 22
+    # 22 foreign keys in revision 0003 plus the audit actor relation in 0006.
+    assert offline_sql.count("add constraint fk_") == 23
+
+
+def test_no_orphan_or_isolated_table(offline_sql: str) -> None:
+    # Constitution I3: every table participates in at least one relation, as a
+    # foreign key source (alter table T add constraint fk_) or target (references T).
+    for table in TABLES:
+        is_source = f"alter table {table} add constraint fk_" in offline_sql
+        is_target = f"references {table}(" in offline_sql or f"references {table} (" in offline_sql
+        assert is_source or is_target, f"{table} is isolated (no incoming or outgoing FK)"
 
 
 def test_trigram_search_index(offline_sql: str) -> None:
