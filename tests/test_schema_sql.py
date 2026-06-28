@@ -82,3 +82,9 @@ def test_partial_active_qr_index(offline_sql: str) -> None:
 
 def test_rls_enabled_on_every_table(offline_sql: str) -> None:
     assert offline_sql.count("enable row level security") == len(TABLES)
+
+
+def test_rls_role_policies_created(offline_sql: str) -> None:
+    # 18 select policies plus 17 write policies (audit is append-only, no write).
+    assert offline_sql.count("create policy ") == 18 + 17
+    assert "adsum_current_role()" in offline_sql
