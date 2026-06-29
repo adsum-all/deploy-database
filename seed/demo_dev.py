@@ -126,7 +126,33 @@ def seed(conn: psycopg.Connection) -> None:
             """,
             (membre_id, past, now - timedelta(days=7, hours=1), now - timedelta(days=7)),
         )
+
+        _seed_notifications(cur, membre_id)
     conn.commit()
+
+
+NOTIFICATIONS = [
+    ("identite", "Identite validee", "Votre carte et votre QR sont actifs.", True),
+    ("rappel", "Rappel : Reunion de la Commission Liturgie", "Dans 3 jours, salle Saint-Gabriel.", False),
+    ("recensement", "Recensement annuel ouvert", "Confirmez votre engagement avant l'echeance.", False),
+]
+
+
+def _seed_notifications(cur: psycopg.Cursor, membre_id: str) -> None:
+    for type_, titre, corps, lu in NOTIFICATIONS:
+        cur.execute(
+            "SELECT 1 FROM notification WHERE membre_id = %s AND titre = %s",
+            (membre_id, titre),
+        )
+        if cur.fetchone():
+            continue
+        cur.execute(
+            """
+            INSERT INTO notification (membre_id, type, titre, corps, lu, envoye_le)
+            VALUES (%s, %s, %s, %s, %s, now())
+            """,
+            (membre_id, type_, titre, corps, lu),
+        )
 
 
 def main() -> None:
