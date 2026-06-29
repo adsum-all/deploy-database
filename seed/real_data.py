@@ -54,6 +54,52 @@ SOUS_COMMISSIONS = [
 
 DIAL = {"Cote d'Ivoire": "+225", "France": "+33", "Canada": "+1"}
 
+# The twelve tribes of Israel, each with the name of its patriarch (tribe leader).
+TRIBUS = [
+    ("Ruben", "Patriarche Emmanuel Kone"),
+    ("Simeon", "Patriarche Joseph Yao"),
+    ("Levi", "Patriarche Gabriel Toure"),
+    ("Juda", "Patriarche Daniel Kouassi"),
+    ("Dan", "Patriarche Samuel Bamba"),
+    ("Nephtali", "Patriarche Andre Kone"),
+    ("Gad", "Patriarche Etienne Aka"),
+    ("Aser", "Patriarche Paul Diby"),
+    ("Issacar", "Patriarche Marc Adou"),
+    ("Zabulon", "Patriarche Luc N'Dri"),
+    ("Joseph", "Patriarche Pierre Konan"),
+    ("Benjamin", "Patriarche Jean Kouame"),
+]
+
+# Engagement level derived from the pastoral journey, plus marital and other data.
+ENGAGEMENT = {
+    "responsable": "responsable",
+    "membre_actif": "engage",
+    "en_accompagnement": "aspirant",
+    "nouveau": "nouveau_engage",
+    "en_pause": "membre_simple",
+    "a_relancer": "membre_simple",
+}
+SITUATIONS = [
+    ("marie", "religieux"),
+    ("celibataire", None),
+    ("en_couple", None),
+    ("marie", "dot"),
+    ("celibataire", None),
+    ("marie", "dot_et_religieux"),
+    ("fiance", None),
+    ("marie", "religieux"),
+    ("celibataire", None),
+    ("marie", "dot"),
+]
+PROFESSIONS = [
+    "Ingenieur", "Enseignante", "Infirmiere", "Comptable", "Etudiante",
+    "Commercant", "Juriste", "Medecin", "Technicien", "Entrepreneur",
+]
+ETUDES = [
+    "Bac+5", "Bac+3", "Bac+2", "Bac+5", "Bac+1",
+    "Bac", "Bac+4", "Doctorat", "Bac+2", "Bac+3",
+]
+
 # (matricule, prenoms, nom, genre, naissance, pays, ville, intendance, commission,
 #  groupe, entree, cheminement, est_berger)
 MEMBERS = [
@@ -145,6 +191,13 @@ def seed(conn: psycopg.Connection) -> None:
                 "INSERT INTO sous_commission (nom, commission_id) VALUES (%s, %s) RETURNING id",
                 (nom, commissions[comm]),
             )
+        tribus = {
+            nom: _get_or_create(
+                cur, "tribu", "nom = %s", (nom,),
+                "INSERT INTO tribu (nom, patriarche) VALUES (%s, %s) RETURNING id", (nom, patriarche),
+            )
+            for nom, patriarche in TRIBUS
+        }
 
         member_ids: dict[str, str] = {}
         berger_users: dict[str, str] = {}
@@ -168,6 +221,24 @@ def seed(conn: psycopg.Connection) -> None:
                  cheminement),
             )
             member_ids[mat] = mid
+
+            tribu_nom = TRIBUS[idx % len(TRIBUS)][0]
+            type_membre = "berger" if est_berger else ENGAGEMENT.get(cheminement, "membre_simple")
+            has_promo = type_membre in ("engage", "responsable", "berger")
+            promotion = f"Pierre Saint-Paul {idx % 3 + 1}" if has_promo else None
+            situation, mariage = SITUATIONS[idx % len(SITUATIONS)]
+            cur.execute(
+                """
+                UPDATE membre SET tribu_id = %s, type_membre = %s, promotion = %s,
+                    situation_matrimoniale = %s, type_mariage = %s, profession = %s,
+                    niveau_etudes = %s, baptise = %s, confirme = %s, premiere_communion = %s
+                WHERE id = %s
+                """,
+                (tribus[tribu_nom], type_membre, promotion, situation, mariage,
+                 PROFESSIONS[idx % len(PROFESSIONS)], ETUDES[idx % len(ETUDES)],
+                 True, idx % 2 == 0, True, mid),
+            )
+
             if est_berger:
                 buid = _get_or_create(
                     cur, "utilisateur", "email = %s", (email,),
@@ -191,6 +262,14 @@ def seed(conn: psycopg.Connection) -> None:
                 cur.execute(
                     "UPDATE membre SET berger_referent_id = %s WHERE id = %s AND berger_referent_id IS NULL",
                     (berger, member_ids[mat]),
+                )
+
+        # General coordinators of the coordinations.
+        for coord_nom, berger in (("Coordination Afrique de l'Ouest", sarah), ("Coordination Europe", marc)):
+            if berger:
+                cur.execute(
+                    "UPDATE coordination SET responsable_id = %s WHERE nom = %s AND responsable_id IS NULL",
+                    (berger, coord_nom),
                 )
 
         now = datetime.now(UTC)
