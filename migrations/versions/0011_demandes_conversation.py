@@ -18,7 +18,7 @@ from __future__ import annotations
 from alembic import op
 
 revision = "0011_demandes_conversation"
-down_revision = "0010_member_documents"
+down_revision = "0009_collaboration"
 branch_labels = None
 depends_on = None
 
@@ -33,7 +33,7 @@ def upgrade() -> None:
     statut_chk = ", ".join(f"'{v}'" for v in STATUTS)
     op.execute(
         f"""
-        CREATE TABLE demande (
+        CREATE TABLE IF NOT EXISTS demande (
             id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
             membre_id uuid NOT NULL REFERENCES membre(id) ON DELETE CASCADE,
             type text NOT NULL DEFAULT 'question',
@@ -49,7 +49,7 @@ def upgrade() -> None:
     )
     op.execute(
         """
-        CREATE TABLE demande_message (
+        CREATE TABLE IF NOT EXISTS demande_message (
             id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
             demande_id uuid NOT NULL REFERENCES demande(id) ON DELETE CASCADE,
             auteur_type text NOT NULL DEFAULT 'membre',
@@ -60,20 +60,23 @@ def upgrade() -> None:
         )
         """
     )
-    op.execute("ALTER TABLE membre ADD COLUMN champs_deverrouilles text[]")
-    op.execute("CREATE INDEX idx_demande_membre ON demande(membre_id)")
-    op.execute("CREATE INDEX idx_demande_message_demande ON demande_message(demande_id)")
+    op.execute("ALTER TABLE membre ADD COLUMN IF NOT EXISTS champs_deverrouilles text[]")
+    op.execute("CREATE INDEX IF NOT EXISTS idx_demande_membre ON demande(membre_id)")
+    op.execute("CREATE INDEX IF NOT EXISTS idx_demande_message_demande ON demande_message(demande_id)")
 
     for table in ("demande", "demande_message"):
         op.execute(f"ALTER TABLE {table} ENABLE ROW LEVEL SECURITY")
+        op.execute(f"DROP POLICY IF EXISTS {table}_self ON {table}")
         op.execute(
             f"CREATE POLICY {table}_self ON {table} FOR ALL "
             f"USING (adsum_current_role() = 'membre') WITH CHECK (adsum_current_role() = 'membre')"
         )
+        op.execute(f"DROP POLICY IF EXISTS {table}_staff_read ON {table}")
         op.execute(
             f"CREATE POLICY {table}_staff_read ON {table} FOR SELECT "
             f"USING (adsum_current_role() = ANY({LECTURE}))"
         )
+        op.execute(f"DROP POLICY IF EXISTS {table}_staff_write ON {table}")
         op.execute(
             f"CREATE POLICY {table}_staff_write ON {table} FOR ALL "
             f"USING (adsum_current_role() = ANY({STAFF})) WITH CHECK (adsum_current_role() = ANY({STAFF}))"
