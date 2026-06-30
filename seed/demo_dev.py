@@ -128,6 +128,14 @@ def seed(conn: psycopg.Connection) -> None:
         )
 
         _seed_notifications(cur, membre_id)
+        cur.execute(
+            """
+            INSERT INTO recensement (annee, ouvert_le, statut)
+            VALUES (%s, now(), 'ouvert')
+            ON CONFLICT (annee) DO NOTHING
+            """,
+            (now.year,),
+        )
     conn.commit()
 
 
