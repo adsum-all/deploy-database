@@ -45,7 +45,7 @@ def upgrade() -> None:
         (
             "activite_test_diffusion",
             "Test de diffusion en live : {titre}",
-            "Ceci est un test de diffusion en live pour {titre}. La session ouvrira bientot. (Test de diffusion en live.)",
+            "Ceci est un test de diffusion en live pour {titre}. La session ouvrira bientôt. (Test de diffusion en live.)",
             "Live broadcast test: {titre}",
             "This is a live broadcast test for {titre}. The session will open shortly. (Live broadcast test.)",
             "evenement",

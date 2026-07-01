@@ -40,7 +40,7 @@ def upgrade() -> None:
         (
             "anniversaire_pairs",
             "Anniversaires du jour",
-            "Aujourd'hui, nous celebrons : {liste}. Prenez un instant pour adresser vos voeux fraternels.",
+            "Aujourd'hui, nous célébrons : {liste}. Prenez un instant pour adresser vos vœux fraternels.",
             "Today's birthdays",
             "Today we celebrate: {liste}. Take a moment to send your warm wishes.",
             "communaute",
