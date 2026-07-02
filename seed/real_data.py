@@ -126,14 +126,19 @@ MEMBERS = [
 ]
 
 # (titre, type, volet, mode, jours_offset, duree_h, lieu)
+# Small, coherent, professional set of fraternity-wide flagship activities.
 EVENTS = [
-    ("KAIROS 2026 - 16e edition", "rassemblement", "B", "presentiel", 30, 8, "Palais de la culture, Abidjan"),
-    ("Rencontre du dimanche", "rencontre", "A", "presentiel", 3, 2, "Siege Sacerdoce Royal, Abidjan"),
-    ("Veillee de priere", "priere", "A", "presentiel", 7, 4, "Siege Sacerdoce Royal, Abidjan"),
+    ("KAIROS 2026 - 16e édition", "rassemblement", "B", "presentiel", 30, 8, "Palais de la culture, Abidjan"),
+    ("Rencontre du dimanche", "rencontre", "A", "presentiel", 3, 2, "Siège Sacerdoce Royal, Abidjan"),
+    ("Veillée de prière", "priere", "A", "presentiel", 7, 4, "Siège Sacerdoce Royal, Abidjan"),
     ("Formation - Les fondements de la foi", "formation", "A", "hybride", 10, 2, "Salle Saint-Gabriel"),
     ("Exposition du Saint Sacrement", "adoration", "A", "presentiel", 5, 3, "Chapelle principale"),
-    ("Renouvellement de l'engagement annuel", "celebration", "A", "presentiel", 21, 3, "Siege Sacerdoce Royal"),
+    ("Renouvellement de l'engagement annuel", "celebration", "A", "presentiel", 21, 3, "Siège Sacerdoce Royal"),
     ("Office du matin", "rencontre", "A", "presentiel", -7, 3, "Salle principale"),
+    ("21 jours de jeûne et de prière", "jeune", "A", "hybride", 14, 504, "Siège Sacerdoce Royal, Abidjan"),
+    ("Révélation", "rassemblement", "B", "presentiel", 45, 6, "Palais de la culture, Abidjan"),
+    ("Congrès annuel du Sacerdoce Royal", "congres", "B", "presentiel", 60, 48, "Palais de la culture, Abidjan"),
+    ("École de ministère", "formation", "A", "hybride", 17, 3, "Salle Saint-Gabriel, Abidjan"),
 ]
 
 
