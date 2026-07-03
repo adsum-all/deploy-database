@@ -1,0 +1,6 @@
+# Dependencies for running the migrations and the offline schema tests.
+# The CI py:test job installs these before pytest so `alembic upgrade head --sql`
+# (offline schema assertions in tests/test_schema_sql.py) can run.
+alembic==1.18.5
+SQLAlchemy==2.0.51
+psycopg[binary]==3.3.4

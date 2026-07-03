@@ -47,9 +47,11 @@ def test_all_18_tables_created(offline_sql: str) -> None:
 
 
 def test_table_count(offline_sql: str) -> None:
-    # 18 domain tables + 13 audit partitions (12 months + default)
-    # + 1 alembic bookkeeping table (alembic_version).
-    assert offline_sql.count("create table ") == len(TABLES) + 13 + 1
+    # Full schema at migration 0055: the 18 DAT domain tables plus everything the
+    # later migrations added (extended domain tables, the two identifier counters,
+    # etc.), the 13 audit partitions (12 months + default) and the alembic_version
+    # bookkeeping table. Update this count whenever a migration adds or drops a table.
+    assert offline_sql.count("create table ") == 68
 
 
 def test_audit_partition_count(offline_sql: str) -> None:
@@ -67,8 +69,9 @@ def test_audit_is_range_partitioned(offline_sql: str) -> None:
 
 
 def test_foreign_keys_present(offline_sql: str) -> None:
-    # 22 foreign keys in revision 0003 plus the audit actor relation in 0006.
-    assert offline_sql.count("add constraint fk_") == 23
+    # Foreign keys across the full schema at migration 0055 (the 23 baseline
+    # relations from revisions 0003/0006 plus those added by later migrations).
+    assert offline_sql.count("add constraint fk_") == 45
 
 
 def test_no_orphan_or_isolated_table(offline_sql: str) -> None:
@@ -90,10 +93,16 @@ def test_partial_active_qr_index(offline_sql: str) -> None:
 
 
 def test_rls_enabled_on_every_table(offline_sql: str) -> None:
-    assert offline_sql.count("enable row level security") == len(TABLES)
+    # Constitution: row level security on every table. Count of ENABLE ROW LEVEL
+    # SECURITY statements across the full schema at migration 0055 (which turns it
+    # on for the two identifier counters). Update this when a table is added.
+    assert offline_sql.count("enable row level security") == 68
 
 
 def test_rls_role_policies_created(offline_sql: str) -> None:
-    # 18 select policies plus 17 write policies (audit is append-only, no write).
-    assert offline_sql.count("create policy ") == 18 + 17
+    # Role policies across the full schema at migration 0055 (the 35 baseline
+    # policies from revision 0002 plus those added by later migrations). The
+    # identifier counters need none: the owner bypasses RLS and anon/authenticated
+    # were already revoked by 0042.
+    assert offline_sql.count("create policy ") == 59
     assert "adsum_current_role()" in offline_sql
