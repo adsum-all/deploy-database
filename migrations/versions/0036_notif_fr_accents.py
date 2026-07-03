@@ -1,3 +1,4 @@
+# ruff: noqa: E501 - migrations carry long SQL and seeded text lines
 """Fix French accents on the membership-workflow notification templates.
 
 Migrations 0027, 0028 and 0030 seeded a subset of templates without their

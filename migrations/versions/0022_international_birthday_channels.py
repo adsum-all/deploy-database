@@ -1,3 +1,4 @@
+# ruff: noqa: E501 - migrations carry long SQL and seeded text lines
 """Internationalization, birthday module and notification channels.
 
 - Members are worldwide: the phone dialling code is stored separately from the
