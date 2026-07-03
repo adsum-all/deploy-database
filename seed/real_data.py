@@ -143,6 +143,15 @@ EVENTS = [
 
 
 def _database_url() -> str:
+    # Guard: seeded example data caused real notifications to real members when
+    # run against production. This seed is for development databases only and
+    # now requires an explicit, conscious confirmation.
+    if os.environ.get("ADSUM_SEED_CONFIRM") != "dev":
+        sys.exit(
+            "REFUS: ce seed insère des données d'exemple (membres, événements). "
+            "Il est réservé aux bases de DÉVELOPPEMENT. Pour l'exécuter en connaissance "
+            "de cause, exportez ADSUM_SEED_CONFIRM=dev. Ne l'exécutez JAMAIS contre la production."
+        )
     url = os.environ.get("DATABASE_URL", "").strip()
     if not url:
         sys.exit("DATABASE_URL is not set. Export it before running the seed.")
