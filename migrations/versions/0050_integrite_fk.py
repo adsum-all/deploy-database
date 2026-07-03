@@ -1,3 +1,4 @@
+# ruff: noqa: E501 - migrations carry long SQL and seeded text lines
 """Referential-integrity hardening and attestation-to-ticket unification.
 
 1. Every reference-shaped column that lacked a foreign key gets one (audited on

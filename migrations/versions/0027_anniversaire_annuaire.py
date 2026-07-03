@@ -1,3 +1,4 @@
+# ruff: noqa: E501 - migrations carry long SQL and seeded text lines
 """Birthday directory: peer visibility, calendar overlay preferences and digest.
 
 Adds the RGPD-safe controls that let members see each other's birthdays in the

@@ -1,3 +1,4 @@
+# ruff: noqa: E501 - migrations carry long SQL and seeded text lines
 """Complete the member notification catalog and add the sensitivity levels.
 
 Adds the remaining notification types (account blocked/unblocked, unusual login,

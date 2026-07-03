@@ -1,3 +1,4 @@
+# ruff: noqa: E501 - migrations carry long SQL and seeded text lines
 """Seed the flagship, fraternity-wide example activities (curated, limited set).
 
 The catalog of example events lacked the organization's signature gatherings that

@@ -1,3 +1,4 @@
+# ruff: noqa: E501 - migrations carry long SQL and seeded text lines
 """Honorific function catalogue and member function assignment.
 
 Members with an important function (Berger, Coordinateur, Intendant, Moderateur,

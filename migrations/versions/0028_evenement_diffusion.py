@@ -1,3 +1,4 @@
+# ruff: noqa: E501 - migrations carry long SQL and seeded text lines
 """Live broadcast: stream kind and event visibility gating.
 
 An event can carry a live stream. type_diffusion tells the client whether the

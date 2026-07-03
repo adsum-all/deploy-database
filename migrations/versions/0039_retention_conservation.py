@@ -1,3 +1,4 @@
+# ruff: noqa: E501 - migrations carry long SQL and seeded text lines
 """Data retention: keep member data for a renewable window with yearly consent.
 
 The business keeps each member's profile photo and provided data for a renewable

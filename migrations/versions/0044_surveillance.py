@@ -1,3 +1,4 @@
+# ruff: noqa: E501 - migrations carry long SQL and seeded text lines
 """Automated in-database health monitoring and access-anomaly detection.
 
 Uses pg_cron (enabled on the project) to capture, every hour, a health snapshot
