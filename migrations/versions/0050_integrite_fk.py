@@ -126,6 +126,21 @@ def upgrade() -> None:
           )
         """
     )
+    # The transmitted scan itself must be openable from the ticket conversation.
+    op.execute(
+        """
+        INSERT INTO demande_message (demande_id, auteur_type, auteur_nom, corps, document_id, cree_le)
+        SELECT am.demande_id, 'membre',
+               (SELECT trim(coalesce(m.prenoms, '') || ' ' || coalesce(m.nom, '')) FROM membre m WHERE m.id = am.membre_id),
+               'Attestation signée transmise.', am.document_id, coalesce(am.soumise_le, now())
+        FROM attestation_manuelle am
+        WHERE am.demande_id IS NOT NULL AND am.document_id IS NOT NULL
+          AND NOT EXISTS (
+            SELECT 1 FROM demande_message dm
+            WHERE dm.demande_id = am.demande_id AND dm.document_id IS NOT NULL
+          )
+        """
+    )
 
 
 def downgrade() -> None:
