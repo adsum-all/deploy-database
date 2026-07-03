@@ -1,0 +1,28 @@
+[project]
+name = "adsum-database"
+version = "0.1.0"
+description = "ADSUM single source of the schema: PostgreSQL migrations (Alembic) for the 17 tables of the DAT plus a real referential seed."
+requires-python = ">=3.11"
+dependencies = [
+    "alembic>=1.13",
+    "SQLAlchemy>=2.0",
+    "psycopg[binary]>=3.1",
+    "argon2-cffi>=23.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.5",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
