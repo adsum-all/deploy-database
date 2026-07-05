@@ -51,7 +51,7 @@ def test_table_count(offline_sql: str) -> None:
     # later migrations added (extended domain tables, the two identifier counters,
     # etc.), the 13 audit partitions (12 months + default) and the alembic_version
     # bookkeeping table. Update this count whenever a migration adds or drops a table.
-    assert offline_sql.count("create table ") == 77
+    assert offline_sql.count("create table ") == 79
 
 
 def test_audit_partition_count(offline_sql: str) -> None:
@@ -96,7 +96,7 @@ def test_rls_enabled_on_every_table(offline_sql: str) -> None:
     # Constitution: row level security on every table. Count of ENABLE ROW LEVEL
     # SECURITY statements across the full schema at migration 0055 (which turns it
     # on for the two identifier counters). Update this when a table is added.
-    assert offline_sql.count("enable row level security") == 77
+    assert offline_sql.count("enable row level security") == 79
 
 
 def test_rls_role_policies_created(offline_sql: str) -> None:
@@ -104,5 +104,5 @@ def test_rls_role_policies_created(offline_sql: str) -> None:
     # policies from revision 0002 plus those added by later migrations). The
     # identifier counters need none: the owner bypasses RLS and anon/authenticated
     # were already revoked by 0042.
-    assert offline_sql.count("create policy ") == 71
+    assert offline_sql.count("create policy ") == 75
     assert "adsum_current_role()" in offline_sql
