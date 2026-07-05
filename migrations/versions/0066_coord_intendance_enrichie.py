@@ -11,7 +11,7 @@ existing rows keep their values, the text ``pays`` column is preserved next to
 the new ISO ``pays_code``, and the exclusivity CHECK is trivially satisfied by
 current members (which only ever carry ``intendance_id``).
 
-Revision ID: 0066_coordination_intendance_enrichie
+Revision ID: 0066_coord_intendance_enrichie
 Revises: 0065_session_fin_geo
 Create Date: 2026-07-05
 """
@@ -19,7 +19,7 @@ from __future__ import annotations
 
 from alembic import op
 
-revision = "0066_coordination_intendance_enrichie"
+revision = "0066_coord_intendance_enrichie"
 down_revision = "0065_session_fin_geo"
 branch_labels = None
 depends_on = None
