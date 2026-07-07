@@ -51,7 +51,7 @@ def test_table_count(offline_sql: str) -> None:
     # later migrations added (extended domain tables, the two identifier counters,
     # etc.), the 13 audit partitions (12 months + default) and the alembic_version
     # bookkeeping table. Update this count whenever a migration adds or drops a table.
-    assert offline_sql.count("create table ") == 83  # + groupe_permission (0076), invitation_engagement (0078)
+    assert offline_sql.count("create table ") == 87  # +4 tables from migrations 0082-0095
 
 
 def test_audit_partition_count(offline_sql: str) -> None:
@@ -93,10 +93,10 @@ def test_partial_active_qr_index(offline_sql: str) -> None:
 
 
 def test_rls_enabled_on_every_table(offline_sql: str) -> None:
-    # Constitution: row level security on every table. Count of ENABLE ROW LEVEL
-    # SECURITY statements across the full schema at migration 0055 (which turns it
-    # on for the two identifier counters). Update this when a table is added.
-    assert offline_sql.count("enable row level security") == 83  # + groupe_permission (0076), invitation_engagement (0078)
+    # Constitution: row level security on every table. The count of ENABLE ROW
+    # LEVEL SECURITY statements must equal the table count (test_table_count), so
+    # every table is covered. Update both when a migration adds or drops a table.
+    assert offline_sql.count("enable row level security") == 87
 
 
 def test_rls_role_policies_created(offline_sql: str) -> None:
