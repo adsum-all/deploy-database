@@ -42,7 +42,6 @@ def upgrade() -> None:
             taille bigint NOT NULL DEFAULT 0,
             type text NOT NULL DEFAULT '',
             url text,
-            couverture boolean NOT NULL DEFAULT false,
             cree_par uuid,
             cree_le timestamptz DEFAULT now(),
             CONSTRAINT collab_piece_cible CHECK (
