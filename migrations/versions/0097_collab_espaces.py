@@ -35,8 +35,11 @@ NEW_TABLES = (
     "collab_demande_acces",
     "collab_tableau_participant",
     "collab_carte_membre",
-    "collab_etiquette",
 )
+# collab_etiquette is intentionally NOT in NEW_TABLES: it was created with its RLS
+# policies by 0096. This revision only alters its column (tableau_id -> espace_id);
+# re-running its role policies here would raise 42710 (CREATE POLICY has no IF NOT
+# EXISTS). Its 0096 policies are role-based and stay valid after the column swap.
 
 
 def upgrade() -> None:

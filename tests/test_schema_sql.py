@@ -99,7 +99,7 @@ def test_rls_enabled_on_every_table(offline_sql: str) -> None:
     # Constitution: row level security on every table. The count of ENABLE ROW
     # LEVEL SECURITY statements must equal the table count (test_table_count), so
     # every table is covered. Update both when a migration adds or drops a table.
-    assert offline_sql.count("enable row level security") == 104
+    assert offline_sql.count("enable row level security") == 103
 
 
 def test_rls_role_policies_created(offline_sql: str) -> None:
@@ -107,7 +107,8 @@ def test_rls_role_policies_created(offline_sql: str) -> None:
     # policies from revision 0002 plus those added by later migrations). The
     # identifier counters need none: the owner bypasses RLS and anon/authenticated
     # were already revoked by 0042.
-    # 2 policies per new collab table across 0096 (5), 0097 (6, carte_membre twice)
-    # and 0098 (6): 93 + 24 = 117.
-    assert offline_sql.count("create policy ") == 117
+    # 2 policies per new collab table across 0096 (5), 0097 (5: espace, espace_membre,
+    # demande_acces, tableau_participant, carte_membre; collab_etiquette keeps its
+    # 0096 policies and is NOT re-policied) and 0098 (6): 93 + 22 = 115.
+    assert offline_sql.count("create policy ") == 115
     assert "adsum_current_role()" in offline_sql
