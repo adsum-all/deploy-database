@@ -1,6 +1,16 @@
 # Minimal pipeline for ADSUM. Delegates to the shared CI templates in
-# sr-media-ai/adsum/deployment/ci-templates (Constitution audit and stack jobs).
+# sr-media-ai/adsum/deployment/ci-templates (Constitution audit, stack jobs and a
+# MANUAL schema migration job on develop).
+# The migration job (deploy:migrate, manual) activates once the protected CI/CD
+# variable ADSUM_DATABASE_URL (Supabase pooler DSN) is set.
+stages:
+  - quality
+  - test
+  - deploy
+
 include:
   - project: 'sr-media-ai/adsum/deployment/ci-templates'
     ref: main
-    file: '/templates/python.yml'
+    file:
+      - '/templates/python.yml'
+      - '/templates/deploy-migrate.yml'
