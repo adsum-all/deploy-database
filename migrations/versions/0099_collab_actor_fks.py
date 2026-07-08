@@ -21,20 +21,25 @@ down_revision = "0098_collab_social"
 branch_labels = None
 depends_on = None
 
-# (table, column, constraint name)
+# (table, column, target constraint name, other constraint names to drop first).
+# Some actor FKs already exist in prod under an older name (added by an earlier
+# migration); this revision is idempotent: it drops any known variant on the
+# column, then adds the canonical constraint with ON DELETE SET NULL.
 ACTOR_FKS = (
-    ("collab_tableau", "cree_par", "fk_collab_tableau_cree_par"),
-    ("collab_carte", "cree_par", "fk_collab_carte_cree_par"),
-    ("collab_commentaire", "auteur_id", "fk_collab_commentaire_auteur"),
-    ("collab_version", "auteur_id", "fk_collab_version_auteur"),
-    ("collab_espace", "cree_par", "fk_collab_espace_cree_par"),
-    ("collab_piece", "cree_par", "fk_collab_piece_cree_par"),
-    ("collab_activite", "auteur_id", "fk_collab_activite_auteur"),
+    ("collab_tableau", "cree_par", "fk_collab_tableau_cree_par", ()),
+    ("collab_carte", "cree_par", "fk_collab_carte_cree_par", ()),
+    ("collab_commentaire", "auteur_id", "fk_collab_commentaire_auteur", ("fk_collab_commentaire_auteur_id",)),
+    ("collab_version", "auteur_id", "fk_collab_version_auteur", ("fk_collab_version_auteur_id",)),
+    ("collab_espace", "cree_par", "fk_collab_espace_cree_par", ()),
+    ("collab_piece", "cree_par", "fk_collab_piece_cree_par", ()),
+    ("collab_activite", "auteur_id", "fk_collab_activite_auteur", ()),
 )
 
 
 def upgrade() -> None:
-    for table, column, constraint in ACTOR_FKS:
+    for table, column, constraint, autres in ACTOR_FKS:
+        for name in (constraint, *autres):
+            op.execute(f"ALTER TABLE {table} DROP CONSTRAINT IF EXISTS {name}")
         op.execute(
             f"UPDATE {table} SET {column} = NULL "
             f"WHERE {column} IS NOT NULL AND {column} NOT IN (SELECT id FROM utilisateur)"
@@ -46,5 +51,5 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
-    for table, _column, constraint in ACTOR_FKS:
+    for table, _column, constraint, _autres in ACTOR_FKS:
         op.execute(f"ALTER TABLE {table} DROP CONSTRAINT IF EXISTS {constraint}")
