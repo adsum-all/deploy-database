@@ -77,7 +77,7 @@ def test_foreign_keys_present(offline_sql: str) -> None:
     # Foreign keys across the full schema (the 23 baseline relations from 0003/0006
     # plus those added by later migrations, plus the 7 collaboration actor FKs to
     # utilisateur added by 0099).
-    assert offline_sql.count("add constraint fk_") == 52
+    assert offline_sql.count("add constraint fk_") == 53
 
 
 def test_no_orphan_or_isolated_table(offline_sql: str) -> None:
