@@ -54,9 +54,9 @@ def test_table_count(offline_sql: str) -> None:
     # +5 collab enrichment tables (0096); +6 space tables (0097, collab_carte_membre
     # is dropped and recreated against utilisateur, hence counted twice); +6 social
     # tables (0098); +1 evenement_piece attachments table (0103); +1 collab_item_assigne
-    # item-assignee join table (0106). The net live table set stays coherent (see the
-    # prod proof). Migrations 0104 and 0105 only add columns.
-    assert offline_sql.count("create table ") == 105
+    # join table (0106); +1 collab_presence live-viewer table (0107). The net live table
+    # set stays coherent (see the prod proof). Migrations 0104 and 0105 only add columns.
+    assert offline_sql.count("create table ") == 106
 
 
 def test_audit_partition_count(offline_sql: str) -> None:
