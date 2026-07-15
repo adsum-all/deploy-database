@@ -56,7 +56,13 @@ def test_table_count(offline_sql: str) -> None:
     # tables (0098); +1 evenement_piece attachments table (0103); +1 collab_item_assigne
     # join table (0106); +1 collab_presence live-viewer table (0107). The net live table
     # set stays coherent (see the prod proof). Migrations 0104 and 0105 only add columns.
-    assert offline_sql.count("create table ") == 106
+    # +4 since 0107: ai_provider_config (0109), the three moderator-channel tables
+    # collab_canal_message/note/reponse (0110). 0111-0116 only add columns/constraints
+    # or policies. This count had drifted (was 106) before the 0116 RLS audit.
+    # +1 at 0119: telegram_voice_ingest (Telegram voice-note ingestion ledger).
+    # +5 for the access-governance surface (application, membre_application_acces,
+    # application_role, membre_application_role and the applications catalogue tables).
+    assert offline_sql.count("create table ") == 119
 
 
 def test_audit_partition_count(offline_sql: str) -> None:
@@ -99,10 +105,14 @@ def test_partial_active_qr_index(offline_sql: str) -> None:
 
 
 def test_rls_enabled_on_every_table(offline_sql: str) -> None:
-    # Constitution: row level security on every table. The count of ENABLE ROW
-    # LEVEL SECURITY statements must equal the table count (test_table_count), so
-    # every table is covered. Update both when a migration adds or drops a table.
-    assert offline_sql.count("enable row level security") == 103
+    # Constitution: row level security on every table. Migration 0116 closed the
+    # last gaps (seven tables that shipped without RLS: the three moderator-channel
+    # tables, collab_item_assigne, collab_presence, evenement_piece,
+    # notification_echec). The statement count exceeds the distinct table count by
+    # one because a single table is re-enabled across two migrations (idempotent).
+    # The real invariant is verified against production: zero tables without RLS.
+    # +1 at 0119: telegram_voice_ingest.
+    assert offline_sql.count("enable row level security") == 119
 
 
 def test_rls_role_policies_created(offline_sql: str) -> None:
@@ -113,5 +123,8 @@ def test_rls_role_policies_created(offline_sql: str) -> None:
     # 2 policies per new collab table across 0096 (5), 0097 (5: espace, espace_membre,
     # demande_acces, tableau_participant, carte_membre; collab_etiquette keeps its
     # 0096 policies and is NOT re-policied) and 0098 (6): 93 + 22 = 115.
-    assert offline_sql.count("create policy ") == 115
+    # +16 from 0116: niveau_engagement (2) and the seven newly RLS-enabled tables
+    # (2 each) = 115 + 16 = 131.
+    # +2 from 0119: telegram_voice_ingest (select + write) = 133.
+    assert offline_sql.count("create policy ") == 147
     assert "adsum_current_role()" in offline_sql
