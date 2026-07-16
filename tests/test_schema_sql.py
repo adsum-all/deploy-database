@@ -82,8 +82,8 @@ def test_audit_is_range_partitioned(offline_sql: str) -> None:
 def test_foreign_keys_present(offline_sql: str) -> None:
     # Foreign keys across the full schema (the 23 baseline relations from 0003/0006
     # plus those added by later migrations, plus the 7 collaboration actor FKs to
-    # utilisateur added by 0099).
-    assert offline_sql.count("add constraint fk_") == 53
+    # utilisateur added by 0099, plus the 3 internal-reference FKs added by 0143).
+    assert offline_sql.count("add constraint fk_") == 56
 
 
 def test_no_orphan_or_isolated_table(offline_sql: str) -> None:
