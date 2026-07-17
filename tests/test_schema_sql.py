@@ -63,7 +63,8 @@ def test_table_count(offline_sql: str) -> None:
     # +5 for the access-governance surface (application, membre_application_acces,
     # application_role, membre_application_role and the applications catalogue tables).
     # +1 at 0145: collab_tableau_favori (per-account board stars).
-    assert offline_sql.count("create table ") == 120
+    # +1 at 0147: cible_activite (administrable activity targeting referential).
+    assert offline_sql.count("create table ") == 121
 
 
 def test_audit_partition_count(offline_sql: str) -> None:
@@ -84,8 +85,9 @@ def test_foreign_keys_present(offline_sql: str) -> None:
     # Foreign keys across the full schema (the 23 baseline relations from 0003/0006
     # plus those added by later migrations, plus the 7 collaboration actor FKs to
     # utilisateur added by 0099, plus the 3 internal-reference FKs added by 0143,
-    # plus the 2 collab_tableau_favori FKs added by 0145).
-    assert offline_sql.count("add constraint fk_") == 58
+    # plus the 2 collab_tableau_favori FKs added by 0145, plus the 3 FKs of 0147
+    # (cible_activite audit columns and evenement.cible_type -> cible_activite).
+    assert offline_sql.count("add constraint fk_") == 61
 
 
 def test_no_orphan_or_isolated_table(offline_sql: str) -> None:
@@ -114,7 +116,8 @@ def test_rls_enabled_on_every_table(offline_sql: str) -> None:
     # one because a single table is re-enabled across two migrations (idempotent).
     # The real invariant is verified against production: zero tables without RLS.
     # +1 at 0119: telegram_voice_ingest. +1 at 0145: collab_tableau_favori.
-    assert offline_sql.count("enable row level security") == 120
+    # +1 at 0147: cible_activite.
+    assert offline_sql.count("enable row level security") == 121
 
 
 def test_rls_role_policies_created(offline_sql: str) -> None:
@@ -129,5 +132,6 @@ def test_rls_role_policies_created(offline_sql: str) -> None:
     # (2 each) = 115 + 16 = 131.
     # +2 from 0119: telegram_voice_ingest (select + write) = 133.
     # +2 from 0145: collab_tableau_favori (select + write).
-    assert offline_sql.count("create policy ") == 149
+    # +2 from 0147: cible_activite (select + write).
+    assert offline_sql.count("create policy ") == 151
     assert "adsum_current_role()" in offline_sql
