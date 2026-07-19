@@ -66,7 +66,8 @@ def test_table_count(offline_sql: str) -> None:
     # +1 at 0147: cible_activite (administrable activity targeting referential).
     # +4 at 0150: the organisation-chart tables (organisation_version/node/link/changelog).
     # +1 at 0162: collab_modele_perso (custom board templates).
-    assert offline_sql.count("create table ") == 131
+    # +1 at 0164: organisation_interim (temporary stand-in ledger).
+    assert offline_sql.count("create table ") == 132
 
 
 def test_audit_partition_count(offline_sql: str) -> None:
@@ -120,8 +121,8 @@ def test_rls_enabled_on_every_table(offline_sql: str) -> None:
     # +1 at 0119: telegram_voice_ingest. +1 at 0145: collab_tableau_favori.
     # +1 at 0147: cible_activite.
     # +4 at 0151: RLS enabled on the four organisation-chart tables (0150).
-    # +1 at 0162: collab_modele_perso.
-    assert offline_sql.count("enable row level security") == 131
+    # +1 at 0162: collab_modele_perso. +1 at 0164: organisation_interim.
+    assert offline_sql.count("enable row level security") == 132
 
 
 def test_rls_role_policies_created(offline_sql: str) -> None:
@@ -139,6 +140,6 @@ def test_rls_role_policies_created(offline_sql: str) -> None:
     # +2 from 0147: cible_activite (select + write).
     # +8 from 0151: select + write on the four organisation-chart tables (0150).
         # +4 from 0154: select + write on information and information_destinataire.
-    # +2 from 0162: select + write on collab_modele_perso.
-    assert offline_sql.count("create policy ") == 171
+    # +2 from 0162: select + write on collab_modele_perso. +2 from 0164: organisation_interim.
+    assert offline_sql.count("create policy ") == 173
     assert "adsum_current_role()" in offline_sql
