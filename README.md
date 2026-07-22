@@ -1,5 +1,11 @@
 # database
 
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17.6-4169E1?logo=postgresql&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-hosted-3FCF8E?logo=supabase&logoColor=white)
+![Alembic](https://img.shields.io/badge/Alembic-1.18-6BA81E)
+![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0-D71F00?logo=sqlalchemy&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)
+
 Part of the ADSUM platform (membership, QR check-in and attendance).
 Subgroup: `deployment`.
 
@@ -9,7 +15,9 @@ Single source of the schema: PostgreSQL migrations (Alembic) and realistic refer
 
 ## Stack
 
-Python, SQLAlchemy, Alembic, PostgreSQL 16.
+Alembic migrations (versioned, single source of the schema) over SQLAlchemy core and
+psycopg 3, applied to a PostgreSQL 17.6 database hosted on Supabase. No application ORM:
+the API talks to the same database directly. Exact versions in the table at the bottom.
 
 ## Conventions
 
@@ -61,3 +69,18 @@ index and the baseline row level security.
 
 Pipelines are defined in `.gitlab-ci.yml`, which includes the shared templates
 from `sr-media-ai/adsum/deployment/ci-templates`.
+
+## Stack technique, versions exactes
+
+Versions testées et déployées (relevées via `pip freeze` dans `.venv`, et `SHOW server_version` sur la base Supabase de production).
+
+| Composant | Rôle | Version exacte |
+| --- | --- | --- |
+| PostgreSQL (Supabase) | Base de données | 17.6 |
+| Python | Runtime des migrations | 3.13.7 |
+| Alembic | Moteur de migrations | 1.18.5 |
+| SQLAlchemy | Core SQL (pas d'ORM applicatif) | 2.0.51 |
+| psycopg / psycopg-binary | Driver PostgreSQL | 3.3.4 |
+| greenlet | Support async SQLAlchemy | 3.5.3 |
+
+Tête de migration courante : `0168_equipes_speciales`. Schéma : 137 tables, RLS active sur 137 tables, 183 policies de rôle.
