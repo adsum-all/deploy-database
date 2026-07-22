@@ -69,7 +69,8 @@ def test_table_count(offline_sql: str) -> None:
     # +1 at 0164: organisation_interim (temporary stand-in ledger).
     # +2 at 0165: reference_couleur + date_liturgique (institutional calendar).
     # +1 at 0167: date_reference_version (reference-date history snapshots).
-    assert offline_sql.count("create table ") == 135
+    # +2 at 0168: equipe_speciale and membre_equipe_speciale (special teams).
+    assert offline_sql.count("create table ") == 137
 
 
 def test_audit_partition_count(offline_sql: str) -> None:
@@ -126,7 +127,7 @@ def test_rls_enabled_on_every_table(offline_sql: str) -> None:
     # +1 at 0162: collab_modele_perso. +1 at 0164: organisation_interim.
     # +2 at 0165: reference_couleur + date_liturgique.
     # +1 at 0167: date_reference_version.
-    assert offline_sql.count("enable row level security") == 135
+    assert offline_sql.count("enable row level security") == 137
 
 
 def test_rls_role_policies_created(offline_sql: str) -> None:
@@ -147,5 +148,6 @@ def test_rls_role_policies_created(offline_sql: str) -> None:
     # +2 from 0162: select + write on collab_modele_perso. +2 from 0164: organisation_interim.
     # +4 from 0165: select + write on reference_couleur and date_liturgique.
     # +2 from 0167: select + write on date_reference_version.
-    assert offline_sql.count("create policy ") == 179
+    # +4 at 0168: 2 policies (select + write) each on equipe_speciale and membre_equipe_speciale.
+    assert offline_sql.count("create policy ") == 183
     assert "adsum_current_role()" in offline_sql
