@@ -182,7 +182,6 @@ def upgrade() -> None:
             "'Catalogue des modèles de tableaux de la collaboration.', "
             f"{_lit(sensibilite)}) ON CONFLICT (cle) DO NOTHING"
         ))
-        liens = ", ".join(f"(g.id, {_lit(p)})" for p in perms)
         bind.execute(sa.text(
             f"INSERT INTO groupe_permission (groupe_id, permission) SELECT g.id, v.p "
             f"FROM groupe_acces g, (VALUES {', '.join(f'({_lit(p)})' for p in perms)}) AS v(p) "
