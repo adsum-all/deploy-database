@@ -70,7 +70,13 @@ def test_table_count(offline_sql: str) -> None:
     # +2 at 0165: reference_couleur + date_liturgique (institutional calendar).
     # +1 at 0167: date_reference_version (reference-date history snapshots).
     # +2 at 0168: equipe_speciale and membre_equipe_speciale (special teams).
-    assert offline_sql.count("create table ") == 137
+    # +7 for revisions 0171 to 0186, which existed on disk but had never been
+    # committed, so this count described a database the repository no longer held:
+    # email_outbox and email_delivery_event (0176, the e-mail ledger),
+    # permission_application (0180), tribu_supervision (0181),
+    # declaration_equipe_dirigeante (0179), document_institutionnel and
+    # document_institutionnel_version (0182).
+    assert offline_sql.count("create table ") == 144
 
 
 def test_audit_partition_count(offline_sql: str) -> None:
@@ -127,7 +133,14 @@ def test_rls_enabled_on_every_table(offline_sql: str) -> None:
     # +1 at 0162: collab_modele_perso. +1 at 0164: organisation_interim.
     # +2 at 0165: reference_couleur + date_liturgique.
     # +1 at 0167: date_reference_version.
-    assert offline_sql.count("enable row level security") == 137
+    # +5 across 0179 to 0182 (declaration_equipe_dirigeante, permission_application,
+    # tribu_supervision, document_institutionnel, document_institutionnel_version).
+    # +2 at 0188: email_outbox and email_delivery_event. Those two shipped with 0176
+    # and had none, which this count could not reveal while the revision itself was
+    # missing from the repository. The statement count and the table count now agree
+    # at 144, which is the invariant this test was always meant to express.
+    assert offline_sql.count("enable row level security") == 144
+    assert offline_sql.count("enable row level security") == offline_sql.count("create table ")
 
 
 def test_rls_role_policies_created(offline_sql: str) -> None:
@@ -149,5 +162,7 @@ def test_rls_role_policies_created(offline_sql: str) -> None:
     # +4 from 0165: select + write on reference_couleur and date_liturgique.
     # +2 from 0167: select + write on date_reference_version.
     # +4 at 0168: 2 policies (select + write) each on equipe_speciale and membre_equipe_speciale.
-    assert offline_sql.count("create policy ") == 183
+    # +4 at 0188: select + write on email_outbox and email_delivery_event, the two
+    # tables the recovered revisions revealed as having no policy at all.
+    assert offline_sql.count("create policy ") == 187
     assert "adsum_current_role()" in offline_sql
