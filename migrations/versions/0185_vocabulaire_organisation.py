@@ -38,19 +38,24 @@ def _cles() -> list[str]:
     return [f"org_mot_{t}_{f}" for t in _TERMES for f in _FACETTES]
 
 
+def _lit(v: str) -> str:
+    """A SQL string literal, quotes doubled."""
+    return "'" + v.replace("'", "''") + "'"
+
+
 def upgrade() -> None:
-    cles = _cles()
-    valeurs = ", ".join("(%s, NULL, 'organisation')" for _ in cles)
     # One multi-row statement rather than a loop: the pooled connection reuses
-    # prepared statement names, and a loop collides on them.
-    op.get_bind().exec_driver_sql(
+    # prepared statement names, and a loop collides on them. Values inlined rather
+    # than bound so the migration also renders under `alembic upgrade --sql`: driver
+    # binding needs a live connection, and offline mode has none. The keys are built
+    # from the module constants above, never from anything outside.
+    valeurs = ", ".join(f"({_lit(c)}, NULL, 'organisation')" for c in _cles())
+    op.execute(
         f"INSERT INTO integration_config (cle, valeur, categorie) VALUES {valeurs} "
-        "ON CONFLICT (cle) DO NOTHING",
-        tuple(cles),
+        "ON CONFLICT (cle) DO NOTHING"
     )
 
 
 def downgrade() -> None:
-    op.get_bind().exec_driver_sql(
-        "DELETE FROM integration_config WHERE cle = ANY(%s)", (_cles(),)
-    )
+    cles = ", ".join(_lit(c) for c in _cles())
+    op.execute(f"DELETE FROM integration_config WHERE cle IN ({cles})")

@@ -38,10 +38,11 @@ def upgrade() -> None:
         "'Cette fonction fait partie du sommet de l''organisation : elle apparaît dans la chaîne "
         "hiérarchique de chaque membre, au-dessus de ses propres unités, même si le poste est vacant.'"
     )
-    op.get_bind().exec_driver_sql(
-        "UPDATE fonction_honorifique SET est_sommet = true WHERE cle = ANY(%s)",
-        (list(_SOMMET),),
-    )
+    # Inlined rather than bound so the migration also renders under
+    # `alembic upgrade --sql`: driver binding needs a live connection, and offline
+    # mode has none. The keys are the module constant above, never anything outside.
+    cles = ", ".join("'" + c.replace("'", "''") + "'" for c in _SOMMET)
+    op.execute(f"UPDATE fonction_honorifique SET est_sommet = true WHERE cle IN ({cles})")
     # The chain is read by ordering on the level, so a top function without one would
     # land in an arbitrary place. Only those that carry a level can be apex.
     op.execute(

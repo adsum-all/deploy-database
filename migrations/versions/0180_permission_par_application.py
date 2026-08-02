@@ -34,6 +34,11 @@ down_revision = "0179_acces_applicatif_explicite"
 branch_labels = None
 depends_on = None
 
+
+def _lit(v: str) -> str:
+    """A SQL string literal, quotes doubled. Same helper as 0175."""
+    return "'" + v.replace("'", "''") + "'"
+
 # Domain to the applications it can be exercised from, beyond the back office.
 # Kept here in full so the migration does not depend on application code.
 _DOMAINES = {
@@ -99,20 +104,22 @@ def upgrade() -> None:
             couples.append((domaine, application))
     if not couples:
         return
-    valeurs = ", ".join("(%s, %s)" for _ in couples)
-    params: list[str] = []
-    for domaine, application in couples:
-        params.extend([domaine, application])
     # One multi-row statement rather than a loop: the pooled connection reuses
     # prepared statement names, and a loop collides on them.
-    op.get_bind().exec_driver_sql(
+    #
+    # Written with the values inlined rather than bound, so the migration also
+    # renders under `alembic upgrade --sql`. Driver-level parameter binding needs a
+    # live connection, and offline mode supplies a stand-in that has none, which made
+    # the whole chain unrenderable and the schema test unable to run. The values are
+    # the module constants above, never anything from outside, and _lit doubles quotes.
+    valeurs = ", ".join(f"({_lit(d)}, {_lit(a)})" for d, a in couples)
+    op.execute(
         "INSERT INTO permission_application (permission, application_code) "
         "SELECT p.cle, v.a "
         f"FROM (VALUES {valeurs}) AS v(d, a) "
         "JOIN permission p ON p.domaine = v.d AND COALESCE(p.portee, '') <> 'self' "
         "WHERE EXISTS (SELECT 1 FROM application ap WHERE ap.code = v.a) "
-        "ON CONFLICT DO NOTHING",
-        tuple(params),
+        "ON CONFLICT DO NOTHING"
     )
 
 

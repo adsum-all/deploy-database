@@ -76,15 +76,17 @@ def upgrade() -> None:
         # Was the literal 2 hours.
         ("pointage_duree_defaut_minutes", "120"),
     ]
-    valeurs = ", ".join("(%s, %s::jsonb)" for _ in reglages)
-    params: list[str] = []
-    for cle, valeur in reglages:
-        params.extend([cle, valeur])
     # One multi-row statement rather than a loop: the pooled connection reuses
-    # prepared statement names, and a loop collides on them.
-    op.get_bind().exec_driver_sql(
-        f"INSERT INTO parametre (cle, valeur) VALUES {valeurs} ON CONFLICT (cle) DO NOTHING",
-        tuple(params),
+    # prepared statement names, and a loop collides on them. Values inlined rather
+    # than bound so the migration also renders under `alembic upgrade --sql`: driver
+    # binding needs a live connection, and offline mode has none. They are the
+    # literals written just above, never anything from outside.
+    def _lit(v: str) -> str:
+        return "'" + v.replace("'", "''") + "'"
+
+    valeurs = ", ".join(f"({_lit(cle)}, {_lit(valeur)}::jsonb)" for cle, valeur in reglages)
+    op.execute(
+        f"INSERT INTO parametre (cle, valeur) VALUES {valeurs} ON CONFLICT (cle) DO NOTHING"
     )
 
 
