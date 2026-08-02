@@ -76,7 +76,8 @@ def test_table_count(offline_sql: str) -> None:
     # permission_application (0180), tribu_supervision (0181),
     # declaration_equipe_dirigeante (0179), document_institutionnel and
     # document_institutionnel_version (0182).
-    assert offline_sql.count("create table ") == 144
+    # +1 at 0190: appareil_push, which holds the devices a member wants notified.
+    assert offline_sql.count("create table ") == 145
 
 
 def test_audit_partition_count(offline_sql: str) -> None:
@@ -139,8 +140,15 @@ def test_rls_enabled_on_every_table(offline_sql: str) -> None:
     # and had none, which this count could not reveal while the revision itself was
     # missing from the repository. The statement count and the table count now agree
     # at 144, which is the invariant this test was always meant to express.
-    assert offline_sql.count("enable row level security") == 144
-    assert offline_sql.count("enable row level security") == offline_sql.count("create table ")
+    # +2 since: 0189 enables it on type_evenement and 0190 on appareil_push.
+    assert offline_sql.count("enable row level security") == 146
+    # The two counts no longer match, and must not. 0189 enabled the feature on
+    # type_evenement, a table created long before without it: that statement has no
+    # CREATE TABLE of its own in this schema, so it is one ENABLE more than there are
+    # tables. Asserting equality again would mean either dropping a real policy or
+    # inventing a table. The invariant that matters is checked against production
+    # instead, and reads zero tables without row level security.
+    assert offline_sql.count("enable row level security") == offline_sql.count("create table ") + 1
 
 
 def test_rls_role_policies_created(offline_sql: str) -> None:
@@ -164,5 +172,7 @@ def test_rls_role_policies_created(offline_sql: str) -> None:
     # +4 at 0168: 2 policies (select + write) each on equipe_speciale and membre_equipe_speciale.
     # +4 at 0188: select + write on email_outbox and email_delivery_event, the two
     # tables the recovered revisions revealed as having no policy at all.
-    assert offline_sql.count("create policy ") == 187
+    # +2 at 0189: select + write on type_evenement, the last table without a policy.
+    # +2 at 0190: select + write on appareil_push.
+    assert offline_sql.count("create policy ") == 191
     assert "adsum_current_role()" in offline_sql
