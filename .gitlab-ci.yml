@@ -3,7 +3,13 @@
 # MANUAL schema migration job on develop).
 # The migration job (deploy:migrate, manual) activates once the protected CI/CD
 # variable ADSUM_DATABASE_URL (Supabase pooler DSN) is set.
+# Declaring stages here REPLACES the list the shared templates declare, so every
+# stage they use has to appear. "audit" was missing, and the Constitution audit job
+# the templates bring in had nowhere to run: the pipeline was refused at creation,
+# with no job and no visible failure, which reads as a broken repository rather than
+# a one-line mistake. It sits first because it gates everything after it.
 stages:
+  - audit
   - quality
   - test
   - deploy
