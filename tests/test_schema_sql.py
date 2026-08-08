@@ -77,7 +77,10 @@ def test_table_count(offline_sql: str) -> None:
     # declaration_equipe_dirigeante (0179), document_institutionnel and
     # document_institutionnel_version (0182).
     # +1 at 0190: appareil_push, which holds the devices a member wants notified.
-    assert offline_sql.count("create table ") == 145
+    # +2 at 0193 and 0194: direction_rapport_planifie, which stores the reports the
+    # organisation sends on its own, and motif_absence, the administrable catalogue of
+    # reasons a member may give for not having followed an activity.
+    assert offline_sql.count("create table ") == 147
 
 
 def test_audit_partition_count(offline_sql: str) -> None:
@@ -141,7 +144,9 @@ def test_rls_enabled_on_every_table(offline_sql: str) -> None:
     # missing from the repository. The statement count and the table count now agree
     # at 144, which is the invariant this test was always meant to express.
     # +2 since: 0189 enables it on type_evenement and 0190 on appareil_push.
-    assert offline_sql.count("enable row level security") == 146
+    # +2 at 0193 and 0194: direction_rapport_planifie and motif_absence. Both name
+    # people or govern what leaves the platform, so neither ships without a policy.
+    assert offline_sql.count("enable row level security") == 148
     # The two counts no longer match, and must not. 0189 enabled the feature on
     # type_evenement, a table created long before without it: that statement has no
     # CREATE TABLE of its own in this schema, so it is one ENABLE more than there are
@@ -174,5 +179,7 @@ def test_rls_role_policies_created(offline_sql: str) -> None:
     # tables the recovered revisions revealed as having no policy at all.
     # +2 at 0189: select + write on type_evenement, the last table without a policy.
     # +2 at 0190: select + write on appareil_push.
-    assert offline_sql.count("create policy ") == 191
+    # +4 at 0193 and 0194: select + write on direction_rapport_planifie and on
+    # motif_absence. Reading is open to any authenticated role; writing is not.
+    assert offline_sql.count("create policy ") == 195
     assert "adsum_current_role()" in offline_sql
