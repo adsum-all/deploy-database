@@ -80,7 +80,14 @@ def test_table_count(offline_sql: str) -> None:
     # +2 at 0193 and 0194: direction_rapport_planifie, which stores the reports the
     # organisation sends on its own, and motif_absence, the administrable catalogue of
     # reasons a member may give for not having followed an activity.
-    assert offline_sql.count("create table ") == 147
+    # +7 for revisions 0196 to 0199, which had shipped without updating this count.
+    # The count is not a number to bump: it is the guard that catches a table added
+    # without anyone noticing, so each one is named here. support_fil,
+    # support_message and support_categorie (0196, the support thread ledger),
+    # organisation_cliente and licence (0197), organisation_hote (0198),
+    # licence_module (0199). Verified against production the same day: 153 live
+    # tables, every one of them with row level security enabled, none without.
+    assert offline_sql.count("create table ") == 154
 
 
 def test_audit_partition_count(offline_sql: str) -> None:
@@ -146,7 +153,10 @@ def test_rls_enabled_on_every_table(offline_sql: str) -> None:
     # +2 since: 0189 enables it on type_evenement and 0190 on appareil_push.
     # +2 at 0193 and 0194: direction_rapport_planifie and motif_absence. Both name
     # people or govern what leaves the platform, so neither ships without a policy.
-    assert offline_sql.count("enable row level security") == 148
+    # +7 for the same seven tables of 0196 to 0199. None of them shipped without
+    # protection: production shows row level security enabled on all 153 live
+    # tables and zero exceptions, which is the invariant this count stands in for.
+    assert offline_sql.count("enable row level security") == 155
     # The two counts no longer match, and must not. 0189 enabled the feature on
     # type_evenement, a table created long before without it: that statement has no
     # CREATE TABLE of its own in this schema, so it is one ENABLE more than there are
