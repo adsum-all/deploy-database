@@ -39,6 +39,11 @@ depends_on = None
 
 RUBRIQUE = "controleur-a-la-porte"
 
+#: The screen keys are the tab identifiers the application already validates,
+#: "scan", "manual" and "queue" (App.tsx, TABS_CTRL). Not the French words on the
+#: buttons: an anchor written against a label breaks the day the label is
+#: translated, and the drawer then opens empty with nothing to signal it.
+#:
 #: cle, slug, titre, extrait, ecran, ordre, blocs
 ARTICLES: tuple[tuple[str, str, str, str, str, int, list[dict[str, object]]], ...] = (
     (
@@ -97,7 +102,7 @@ ARTICLES: tuple[tuple[str, str, str, str, str, int, list[dict[str, object]]], ..
         "sans-reseau",
         "Sans réseau, où vont mes pointages",
         "Ils sont gardés sur l'appareil et partent tout seuls au retour du réseau.",
-        "controleur.file",
+        "controleur.queue",
         30,
         [
             {"type": "paragraphe", "texte": (
@@ -119,7 +124,7 @@ ARTICLES: tuple[tuple[str, str, str, str, str, int, list[dict[str, object]]], ..
         "la-file-ne-se-vide-pas",
         "La file ne se vide pas alors que je viens de me reconnecter",
         "Presque toujours parce que les pointages en attente ont été saisis par un autre compte.",
-        "controleur.file",
+        "controleur.queue",
         40,
         [
             {"type": "paragraphe", "texte": (
@@ -143,7 +148,7 @@ ARTICLES: tuple[tuple[str, str, str, str, str, int, list[dict[str, object]]], ..
         "passer-le-poste",
         "Passer le poste à un autre contrôleur sans perdre la file",
         "Toujours vider la file avant de changer de compte. C'est la seule règle.",
-        "controleur.file",
+        "controleur.queue",
         50,
         [
             {"type": "avertissement", "texte": (
