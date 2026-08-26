@@ -1,0 +1,364 @@
+{
+ "rubriques": [
+  {
+   "code": "carte-et-presence",
+   "application_code": "web-membre",
+   "titre": "Ma carte et ma présence",
+   "titre_en": "My card and my attendance",
+   "description": "La carte de membre, le code à scanner, et la façon de déclarer si vous avez suivi une activité.",
+   "ordre": 1,
+   "cote": "client"
+  },
+  {
+   "code": "mon-dossier",
+   "application_code": "web-membre",
+   "titre": "Mon dossier et mes pièces",
+   "titre_en": "My file and my documents",
+   "description": "Où en est votre inscription, ce qui est encore attendu de vous, et comment envoyer un document.",
+   "ordre": 2,
+   "cote": "client"
+  },
+  {
+   "code": "mes-demandes",
+   "application_code": "web-membre",
+   "titre": "Corrections et demandes",
+   "titre_en": "Corrections and requests",
+   "description": "Faire corriger une information de votre dossier, et joindre le support quand l'application ne répond pas comme prévu.",
+   "ordre": 3,
+   "cote": "client"
+  },
+  {
+   "code": "notifications-telephone",
+   "application_code": "mobile-membre",
+   "titre": "Notifications sur mon téléphone",
+   "titre_en": "Notifications on my phone",
+   "description": "Ce que l'application installée fait toute seule, et comment lier Telegram pour être prévenu.",
+   "ordre": 5,
+   "cote": "client"
+  }
+ ],
+ "articles": [
+  {
+   "cle": "espace-membre-carte-et-qr",
+   "slug": "ma-carte-et-son-qr",
+   "titre": "Ma carte de membre et à quoi sert son QR",
+   "extrait": "La carte porte votre identité et un code à scanner signé par le serveur. Il se renouvelle tout seul et sert au contrôle à l'entrée.",
+   "rubrique": "carte-et-presence",
+   "application_code": "web-membre",
+   "cle_ecran": "web-membre.carte",
+   "ordre": 1,
+   "cote": "client",
+   "visibilite": "membres",
+   "permission_requise": null,
+   "module_requis": null,
+   "blocs": [
+    {
+     "type": "paragraphe",
+     "texte": "L'onglet Carte est le premier écran de l'application. Il affiche votre photo, votre nom, votre matricule, votre code membre, votre niveau d'engagement, et la mention VÉRIFIÉ ou EN ATTENTE selon l'état de votre dossier. Quand aucun code membre n'a été saisi, la case affiche un tiret.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "paragraphe",
+     "texte": "Le code à scanner n'est pas une image fixe. C'est un jeton signé par le serveur, valable 90 secondes, que l'application redemande automatiquement toutes les minutes tant que l'écran reste ouvert. Une photo ou une capture d'écran de ce code cesse donc de fonctionner au bout de quelques secondes.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "etapes",
+     "texte": "",
+     "elements": [
+      "Ouvrir l'onglet Carte.",
+      "Appuyer sur Afficher en plein écran.",
+      "Monter la luminosité de l'écran, comme le rappelle le message affiché.",
+      "Présenter le code à la personne qui contrôle.",
+      "Fermer le plein écran une fois le scan accepté."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "points",
+     "texte": "",
+     "elements": [
+      "Le scan enregistre votre arrivée pour cette activité.",
+      "Il enregistre aussi votre présence : le formulaire de déclaration se verrouille et affiche « Présent, confirmé au point de contrôle ».",
+      "Le scan apparaît ensuite dans l'onglet Activités, section Contrôles, avec la date, le lieu et l'heure d'arrivée."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "avertissement",
+     "texte": "Le code est demandé au serveur à chaque renouvellement. Sans réseau, l'application affiche « QR momentanément indisponible, réessai en cours » et garde le dernier code obtenu, qui n'est plus valable passé 90 secondes. Ouvrez votre carte pendant que vous avez encore du réseau.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "paragraphe",
+     "texte": "Le contrôle vérifie aussi l'état de votre dossier, et pas seulement la validité du code. Un dossier suspendu, archivé, inactif, désactivé ou dont l'inscription a été refusée fait refuser le pointage, avec le motif affiché à la personne qui contrôle. Un dossier simplement incomplet ou en cours de revue ne bloque pas : il déclenche seulement une alerte de son côté.",
+     "elements": [],
+     "ecran": ""
+    }
+   ]
+  },
+  {
+   "cle": "espace-membre-corriger-une-information",
+   "slug": "corriger-une-information-de-mon-dossier",
+   "titre": "Faire corriger une information erronée de mon dossier",
+   "extrait": "Vous ne modifiez pas vos informations directement. Vous demandez, l'administration débloque, vous corrigez en une seule fois.",
+   "rubrique": "mes-demandes",
+   "application_code": "web-membre",
+   "cle_ecran": "web-membre.infos",
+   "ordre": 1,
+   "cote": "client",
+   "visibilite": "membres",
+   "permission_requise": null,
+   "module_requis": null,
+   "blocs": [
+    {
+     "type": "paragraphe",
+     "texte": "Vos informations se lisent dans l'onglet Profil, puis Mes informations. Elles ne sont pas modifiables directement : elles sont gérées par l'administration. La correction se déroule en deux temps, une demande de votre part, puis un déblocage accordé par l'administration.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "etapes",
+     "texte": "",
+     "elements": [
+      "Ouvrir Profil, puis Mes informations.",
+      "Descendre jusqu'au bouton « Demander une modification ».",
+      "Choisir la catégorie, puis la demande précise dans la liste proposée.",
+      "Le sujet et le message sont déjà rédigés : compléter le message avec la valeur exacte attendue.",
+      "Appuyer sur « Envoyer la demande »."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "paragraphe",
+     "texte": "L'administration vous répond dans la conversation de la demande. Si elle accepte, elle débloque les éléments concernés. Un bandeau apparaît alors en haut de Mes informations : « L'administration a débloqué pour vous : ... », avec la date limite pour répondre. Un formulaire de correction s'ouvre au bas de la même page.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "etapes",
+     "texte": "",
+     "elements": [
+      "Ouvrir Profil, puis Mes informations.",
+      "Corriger tous les éléments débloqués dans le formulaire situé au bas de la page.",
+      "Si la photo est débloquée, choisir la nouvelle photo et la recadrer : elle partira avec le reste.",
+      "Appuyer une seule fois sur « Soumettre pour validation »."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "avertissement",
+     "texte": "La soumission est unique et consomme tout le déblocage d'un seul coup. Ce que vous n'avez pas corrigé dans cet envoi reste erroné jusqu'à ce que l'administration ouvre un nouveau déblocage. Une seconde tentative reçoit la réponse : « Cette demande a déjà été soumise. Une seule soumission est possible par déblocage. »",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "points",
+     "texte": "",
+     "elements": [
+      "Les corrections ne sont pas enregistrées à l'envoi : elles le sont après validation finale par l'administration.",
+      "Remplacer la photo sans déblocage est refusé, avec un message qui vous invite à ouvrir la demande « Changer ma photo d'identité ».",
+      "Le bandeau affiche une date limite. L'application annonce que passé cette date la demande sera clôturée sans suite.",
+      "Tant que la validation n'est pas faite, l'écran affiche « Modification en attente de validation » et le formulaire disparaît."
+     ],
+     "ecran": ""
+    }
+   ]
+  },
+  {
+   "cle": "espace-membre-envoyer-une-piece",
+   "slug": "envoyer-une-piece-justificative",
+   "titre": "Envoyer une pièce justificative depuis l'application",
+   "extrait": "Une pièce se dépose dans la conversation d'une demande. Formats acceptés, taille maximale, et ce qui remplace quoi.",
+   "rubrique": "mon-dossier",
+   "application_code": "web-membre",
+   "cle_ecran": "web-membre.demandes",
+   "ordre": 2,
+   "cote": "client",
+   "visibilite": "membres",
+   "permission_requise": null,
+   "module_requis": null,
+   "blocs": [
+    {
+     "type": "paragraphe",
+     "texte": "Le fichier s'envoie depuis la conversation d'une demande. Le bouton se trouve à gauche du champ de message et porte un signe plus. Les messages de l'application parlent parfois de trombone : il s'agit de ce même bouton. Le fichier part immédiatement et un message « Pièce jointe : ... » s'ajoute à la conversation.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "etapes",
+     "texte": "",
+     "elements": [
+      "Ouvrir Profil, puis Mes demandes.",
+      "Ouvrir la demande concernée.",
+      "Appuyer sur le bouton plus, à gauche du champ de message.",
+      "Choisir une image ou un fichier PDF.",
+      "Attendre le message de confirmation : « Pièce envoyée dans la demande. »"
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "points",
+     "texte": "",
+     "elements": [
+      "Formats acceptés : images JPG, PNG, WEBP, HEIC ou HEIF, et fichiers PDF.",
+      "Taille maximale : 15 Mo. Au-delà, le message est « fichier trop volumineux (15 Mo maximum) : réduisez la taille ou la résolution, puis réessayez ».",
+      "Le contenu réel du fichier est vérifié, pas seulement son extension. Un fichier simplement renommé est refusé avec « type de fichier non autorisé (image ou PDF attendu) ».",
+      "Les pièces sont chiffrées avant d'être conservées."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "avertissement",
+     "texte": "Le serveur ne conserve qu'une seule pièce par type de document. Envoyer une nouvelle pièce du même type remplace la précédente, et l'ancien fichier est supprimé du stockage. Vérifiez que le fichier envoyé est bien celui que vous voulez conserver.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "paragraphe",
+     "texte": "Quand l'administration attend une pièce, la demande porte l'état « Pièces demandées » et la conversation affiche : « L'administration attend une pièce : utilisez le trombone pour la joindre ici. » Un bandeau apparaît aussi en haut des écrans principaux et vous ramène directement à la demande concernée.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "paragraphe",
+     "texte": "Une attestation signée se renvoie ailleurs : par la bannière située en haut de l'onglet Carte. On y télécharge ou imprime le texte, on le signe, puis on téléverse le scan avec « Envoyer à l'administration ». Les formats indiqués sont PDF, JPG ou PNG. Une fois transmise, l'écran passe en suivi et plus rien n'est attendu de vous.",
+     "elements": [],
+     "ecran": ""
+    }
+   ]
+  },
+  {
+   "cle": "espace-membre-contacter-le-support",
+   "slug": "contacter-le-support",
+   "titre": "Contacter le support depuis l'application, et suivre ma demande",
+   "extrait": "Ouvrir un fil avec l'équipe technique, obtenir une référence, et suivre les échanges sans quitter l'application.",
+   "rubrique": "mes-demandes",
+   "application_code": "web-membre",
+   "cle_ecran": "web-membre.support",
+   "ordre": 2,
+   "cote": "client",
+   "visibilite": "membres",
+   "permission_requise": null,
+   "module_requis": null,
+   "blocs": [
+    {
+     "type": "paragraphe",
+     "texte": "Le support s'ouvre par l'onglet Profil, puis Contacter le support. C'est le canal pour un problème technique ou une question sur l'application elle-même. Pour faire corriger une information de votre dossier, c'est Mes demandes qu'il faut utiliser : le fil de support ne donne aucun accès à votre fiche.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "etapes",
+     "texte": "",
+     "elements": [
+      "Ouvrir Profil, puis Contacter le support.",
+      "Appuyer sur « Nouvelle demande ».",
+      "Choisir la catégorie dans la liste « De quoi s'agit-il ? ».",
+      "Écrire un sujet d'au moins 3 caractères.",
+      "Écrire le message, au moins 10 caractères : ce que vous avez fait, puis ce qui s'est passé.",
+      "Appuyer sur « Envoyer »."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "paragraphe",
+     "texte": "Une référence est attribuée et affichée aussitôt, sous la forme « Demande enregistrée sous la référence SUP-année-numéro ». Elle identifie votre fil et se retrouve dans l'objet des courriels échangés, ce qui permet à une réponse de revenir au bon endroit.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "points",
+     "texte": "",
+     "elements": [
+      "La liste montre chaque demande avec sa référence et son état : En cours de traitement, ou Close.",
+      "Ouvrir une demande affiche les échanges : vos messages d'un côté, ceux de l'équipe de l'autre.",
+      "Tant qu'une demande est en cours, un champ en bas permet d'ajouter un message. Un ajout de votre part la remet en attente de réponse.",
+      "Une demande close n'accepte plus de message : « Cette demande est close. Ouvrez-en une nouvelle pour un autre sujet. »"
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "avertissement",
+     "texte": "Deux refus fréquents. Sans adresse de courriel enregistrée sur votre compte, l'envoi est refusé : « Votre compte n'a pas d'adresse de courriel : nous ne pourrions pas vous répondre. » Et si vous avez déjà une demande ouverte portant exactement le même sujet, l'envoi est refusé et vous renvoie vers cette demande, pour ne pas couper la conversation en deux.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "lien_ecran",
+     "texte": "Le fil de support n'accepte que du texte. Pour transmettre un fichier, passer par Mes demandes.",
+     "elements": [],
+     "ecran": "web-membre.demandes"
+    }
+   ]
+  },
+  {
+   "cle": "espace-membre-notifications-telephone",
+   "slug": "notifications-sur-mon-telephone",
+   "titre": "Recevoir les notifications sur mon téléphone",
+   "extrait": "Ce que l'application installée fait toute seule au démarrage, et comment lier Telegram en trois étapes.",
+   "rubrique": "notifications-telephone",
+   "application_code": "mobile-membre",
+   "cle_ecran": "mobile-membre.settings",
+   "ordre": 1,
+   "cote": "client",
+   "visibilite": "membres",
+   "permission_requise": null,
+   "module_requis": null,
+   "blocs": [
+    {
+     "type": "paragraphe",
+     "texte": "L'application installée sur le téléphone est exactement la même que celle du navigateur, placée dans une enveloppe qui sait parler au système du téléphone. C'est cette enveloppe qui permet de recevoir une notification même quand l'application est fermée.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "paragraphe",
+     "texte": "Il n'y a rien à activer dans l'application. À chaque ouverture, elle demande d'abord au serveur si l'organisation a bien mis en place l'envoi vers les téléphones. Si oui, et seulement si oui, le système du téléphone vous demande l'autorisation d'afficher des notifications. Cette question n'est posée qu'une seule fois : si vous refusez, il faut ensuite l'autoriser depuis les réglages du téléphone.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "points",
+     "texte": "",
+     "elements": [
+      "L'enregistrement du téléphone est refait à chaque ouverture, car le service de notifications change ses identifiants avec le temps.",
+      "Se déconnecter retire ce téléphone avant de fermer la session : les notifications cessent d'y arriver.",
+      "Un téléphone que le service refuse durablement est retiré automatiquement.",
+      "L'application ne propose pas d'interrupteur pour ces notifications : elles se coupent depuis les réglages du téléphone.",
+      "Ouverte dans un navigateur, l'application ne fait rien de tout cela."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "paragraphe",
+     "texte": "Le second moyen d'être prévenu sur votre téléphone est Telegram, qui fonctionne aussi bien depuis le navigateur que depuis l'application installée. Il se met en place dans Profil, puis Paramètres, section Canaux. Le message annonce trois étapes et une minute.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "etapes",
+     "texte": "",
+     "elements": [
+      "Ouvrir Profil, puis Paramètres, et descendre jusqu'à Telegram.",
+      "Appuyer sur « Ouvrir Telegram » : la conversation avec le robot de la plateforme s'ouvre.",
+      "Appuyer sur Démarrer dans cette conversation.",
+      "Revenir dans l'application et appuyer sur « J'ai appuyé sur Démarrer, envoyez le code ».",
+      "Saisir dans l'application le code à 6 chiffres reçu dans Telegram.",
+      "Appuyer sur Confirmer."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "avertissement",
+     "texte": "Le code de liaison a une durée de validité limitée, affichée en compte à rebours à côté de la saisie, et un nombre d'essais limité. Après trop d'erreurs, l'écran affiche « Trop de tentatives. Recommencez la liaison depuis le début. » et la liaison repart de la première étape.",
+     "elements": [],
+     "ecran": ""
+    }
+   ]
+  }
+ ]
+}

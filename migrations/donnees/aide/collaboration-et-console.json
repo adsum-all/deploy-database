@@ -1,0 +1,422 @@
+{
+ "rubriques": [
+  {
+   "code": "collaboration-espaces-et-acces",
+   "application_code": "collaboration",
+   "titre": "Espaces et accès",
+   "titre_en": "Spaces and access",
+   "description": "Entrer dans un espace, comprendre comment il est organisé, et lire un refus d'accès.",
+   "ordre": 10,
+   "cote": "client"
+  },
+  {
+   "code": "collaboration-tableaux-et-recuperation",
+   "application_code": "collaboration",
+   "titre": "Tableaux et récupération",
+   "titre_en": "Boards and recovery",
+   "description": "Créer un tableau à partir d'un modèle, et retrouver ce qui a été archivé ou supprimé.",
+   "ordre": 20,
+   "cote": "client"
+  },
+  {
+   "code": "console-file-de-support",
+   "application_code": "console",
+   "titre": "La file de support",
+   "titre_en": "The support queue",
+   "description": "Traiter une demande de bout en bout, et comprendre les refus d'accès à la console.",
+   "ordre": 10,
+   "cote": "editeur"
+  },
+  {
+   "code": "console-parc-et-mise-en-service",
+   "application_code": "console",
+   "titre": "Parc et mise en service",
+   "titre_en": "Customer base and provisioning",
+   "description": "Diagnostiquer les envois, mettre une organisation en service, suspendre un accès.",
+   "ordre": 20,
+   "cote": "editeur"
+  }
+ ],
+ "articles": [
+  {
+   "cle": "collaboration-rejoindre-espace-lien",
+   "slug": "rejoindre-un-espace-avec-un-lien",
+   "titre": "Rejoindre un espace avec le lien reçu, et qui valide la demande",
+   "extrait": "Le lien ne vous fait pas entrer tout de suite. Il dépose une demande, qu'une personne responsable de l'espace accepte ou refuse.",
+   "rubrique": "collaboration-espaces-et-acces",
+   "application_code": "collaboration",
+   "cle_ecran": "collaboration.accueil",
+   "ordre": 10,
+   "cote": "client",
+   "visibilite": "membres",
+   "permission_requise": "collaboration.superviser",
+   "module_requis": "collaboration",
+   "blocs": [
+    {
+     "type": "paragraphe",
+     "texte": "Le lien d'invitation d'un espace se termine par « /rejoindre » suivi d'un jeton. L'ouvrir ne vous ajoute pas à l'espace. Il enregistre une demande d'accès à votre nom, et prévient les personnes qui gèrent cet espace.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "etapes",
+     "texte": "",
+     "elements": [
+      "Ouvrir le lien dans le navigateur.",
+      "Se connecter si la page de connexion s'affiche. La demande n'est déposée qu'une fois la session ouverte.",
+      "Lire le bandeau affiché en haut de la page, qui dit ce qui s'est passé.",
+      "Attendre la validation. Il n'y a rien d'autre à faire de votre côté."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "points",
+     "texte": "",
+     "elements": [
+      "Le bandeau annonce que la demande a été envoyée et qu'un responsable doit la valider : tout va bien, elle est enregistrée.",
+      "Le bandeau annonce que vous êtes déjà membre : l'espace s'ouvre directement, sans demande.",
+      "Le bandeau annonce que l'invitation n'est plus valide : le lien ne correspond à aucun espace actif, l'espace a été archivé, ou votre compte n'a pas accès à la collaboration."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "paragraphe",
+     "texte": "La demande part vers les personnes qui portent le rôle Propriétaire ou Admin dans cet espace, et vers elles seules. Elles la retrouvent dans l'espace, onglet Membres, section Demandes d'accès. Accepter vous ajoute avec le rôle Membre. Refuser efface simplement la demande.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "avertissement",
+     "texte": "Ni l'acceptation ni le refus ne vous envoient de message. Si rien ne se passe au bout de quelques jours, redemandez le lien à la personne qui gère l'espace plutôt que d'attendre une réponse qui ne viendra pas.",
+     "elements": [],
+     "ecran": ""
+    }
+   ]
+  },
+  {
+   "cle": "collaboration-espace-sous-espace-tableau-carte",
+   "slug": "espace-sous-espace-tableau-carte",
+   "titre": "Espace, sous-espace, tableau, carte : qui contient quoi",
+   "extrait": "Quatre niveaux emboîtés. Savoir lequel on regarde évite de chercher un tableau au mauvais endroit.",
+   "rubrique": "collaboration-espaces-et-acces",
+   "application_code": "collaboration",
+   "cle_ecran": "collaboration.espace",
+   "ordre": 20,
+   "cote": "client",
+   "visibilite": "membres",
+   "permission_requise": null,
+   "module_requis": "collaboration",
+   "blocs": [
+    {
+     "type": "paragraphe",
+     "texte": "La collaboration s'organise en quatre niveaux emboîtés. Un espace contient des sous-espaces et des tableaux. Un tableau contient des colonnes. Une colonne contient des cartes.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "points",
+     "texte": "",
+     "elements": [
+      "L'espace est le niveau le plus haut. Il porte sa propre liste de membres, ses étiquettes, son calendrier, son tableau de bord et ses réglages. On le crée depuis la page Espaces de travail.",
+      "Le sous-espace est un espace complet, rangé dans un espace principal. Il a lui aussi ses tableaux, son calendrier, ses membres et ses réglages. Un sous-espace ne peut pas en contenir un autre : la profondeur s'arrête à un niveau.",
+      "Le tableau est une grille de colonnes, posée dans un espace ou dans un sous-espace. Il est visible par tout l'espace, ou marqué privé et réservé à ses participants.",
+      "La carte est la fiche de travail, placée dans une colonne. Elle porte un numéro, une description, des étiquettes, des personnes assignées, une échéance, des listes de contrôle et des pièces jointes."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "paragraphe",
+     "texte": "L'appartenance ne descend pas toute seule. Être membre d'un espace principal ne rend pas membre de ses sous-espaces : chaque sous-espace tient sa propre liste. De même, dans un tableau privé, être membre de l'espace ne suffit pas, il faut être ajouté comme participant du tableau.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "paragraphe",
+     "texte": "Un tableau qui vient d'être créé reçoit d'office une première colonne nommée « Instructions du canal », sauf si ce comportement a été désactivé dans les réglages de l'organisation. Les instructions reçues par le canal se déposent dans cette colonne.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "lien_ecran",
+     "texte": "Ouvrir un espace pour voir ses onglets Tableaux, Calendrier, Tableau de bord, Membres et Réglages.",
+     "elements": [],
+     "ecran": "collaboration.espace"
+    }
+   ]
+  },
+  {
+   "cle": "collaboration-acces-refuse-espace",
+   "slug": "acces-refuse-a-un-espace",
+   "titre": "« Accès refusé » sur un espace : ce que cela veut dire",
+   "extrait": "Le message ne parle pas de votre compte. Il dit que vous n'êtes pas membre de cet espace précis.",
+   "rubrique": "collaboration-espaces-et-acces",
+   "application_code": "collaboration",
+   "cle_ecran": "collaboration.espace",
+   "ordre": 30,
+   "cote": "client",
+   "visibilite": "membres",
+   "permission_requise": null,
+   "module_requis": "collaboration",
+   "blocs": [
+    {
+     "type": "paragraphe",
+     "texte": "L'écran « Accès refusé » s'affiche quand vous ouvrez un espace dont vous n'êtes pas membre. Votre compte fonctionne et votre session est valide. C'est l'appartenance à cet espace-là qui manque, rien d'autre.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "points",
+     "texte": "",
+     "elements": [
+      "Vous avez suivi un lien ou un signet vers un espace auquel personne ne vous a ajouté.",
+      "Vous avez cliqué sur la vignette d'un sous-espace. Ces vignettes sont visibles par tous les membres de l'espace principal, mais y entrer demande d'être membre du sous-espace lui-même.",
+      "Vous avez été retiré de l'espace depuis votre dernière visite.",
+      "Le message apparaît alors que l'espace se chargeait encore : dans ce cas la page affiche d'abord « Chargement de l'espace », et le refus ne s'affiche qu'une fois la réponse reçue."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "paragraphe",
+     "texte": "Un cas voisin donne un refus différent. Un tableau marqué Privé n'est ouvert qu'à ses participants. Être membre de l'espace ne suffit pas : la personne qui gère le tableau doit vous y ajouter.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "etapes",
+     "texte": "",
+     "elements": [
+      "Repérer une personne qui porte le rôle Propriétaire ou Admin dans cet espace.",
+      "Lui demander de vous ajouter, ou de vous envoyer le lien d'invitation de l'espace.",
+      "Ouvrir ce lien, ce qui dépose une demande d'accès.",
+      "Attendre qu'elle soit acceptée."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "avertissement",
+     "texte": "L'écran de refus ne propose aucun bouton pour demander l'accès. Sans lien d'invitation, la seule voie est qu'une personne responsable de l'espace vous ajoute. Insister en rechargeant la page ne changera rien.",
+     "elements": [],
+     "ecran": ""
+    }
+   ]
+  },
+  {
+   "cle": "collaboration-corbeille-archives-recuperation",
+   "slug": "retrouver-un-element-supprime",
+   "titre": "Retrouver un élément supprimé : ce que la corbeille reprend, et ce qu'elle ne reprend pas",
+   "extrait": "La corbeille récupère les espaces et les tableaux. Une carte supprimée ne revient pas ; seule une carte archivée se restaure.",
+   "rubrique": "collaboration-tableaux-et-recuperation",
+   "application_code": "collaboration",
+   "cle_ecran": "collaboration.corbeille",
+   "ordre": 10,
+   "cote": "client",
+   "visibilite": "membres",
+   "permission_requise": null,
+   "module_requis": "collaboration",
+   "blocs": [
+    {
+     "type": "avertissement",
+     "texte": "Supprimer une carte l'efface pour de bon, avec ses commentaires, ses listes de contrôle et ses pièces jointes. Elle ne passe pas par la corbeille et rien ne la ramène. La fenêtre de confirmation est la seule protection. Pour retirer une carte du tableau sans la perdre, utiliser Archiver.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "paragraphe",
+     "texte": "Trois mécanismes coexistent et ne se rangent pas au même endroit. Archiver met de côté sans rien supprimer, et se défait d'un clic. Supprimer un espace ou un tableau les envoie à la corbeille pour une durée limitée. Supprimer une carte est immédiat et définitif.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "points",
+     "texte": "",
+     "elements": [
+      "Une carte archivée : dans son tableau, bouton Archives en haut de page, puis Restaurer.",
+      "Un tableau archivé : dans l'espace concerné, onglet Réglages, section Tableaux archivés, bouton Réactiver.",
+      "Un espace archivé : page Corbeille et archives, section Espaces archivés, bouton Désarchiver.",
+      "Un espace ou un tableau supprimé : page Corbeille et archives, section Corbeille, bouton Restaurer, tant que le délai n'est pas écoulé."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "formule",
+     "texte": "Jours restants avant l'effacement définitif = durée de rétention réglée pour l'organisation, moins le nombre de jours entiers écoulés depuis la suppression, sans jamais descendre sous zéro. La durée par défaut est de 14 jours et se règle de 0 à 90 jours. Réglée à 0, il n'y a pas de corbeille du tout : la suppression est immédiate et définitive.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "paragraphe",
+     "texte": "La page ne montre que les espaces et les tableaux dont vous étiez membre. Restaurer et désarchiver demandent un droit d'écriture sur la collaboration : sans lui, la page reste consultable mais les boutons n'apparaissent pas, et une phrase le dit en bas de page.",
+     "elements": [],
+     "ecran": ""
+    }
+   ]
+  },
+  {
+   "cle": "collaboration-tableau-depuis-modele",
+   "slug": "partir-d-un-modele-de-tableau",
+   "titre": "Partir d'un modèle de tableau",
+   "extrait": "Un modèle pose les colonnes du tableau au moment de sa création. Ensuite le tableau vit sa vie, le modèle ne le suit plus.",
+   "rubrique": "collaboration-tableaux-et-recuperation",
+   "application_code": "collaboration",
+   "cle_ecran": "collaboration.espace",
+   "ordre": 20,
+   "cote": "client",
+   "visibilite": "membres",
+   "permission_requise": "collaboration.gerer",
+   "module_requis": "collaboration",
+   "blocs": [
+    {
+     "type": "paragraphe",
+     "texte": "Créer un tableau à partir d'un modèle recopie ses colonnes, avec leur nom, leur couleur et leur limite d'en-cours quand elle est fixée. Cette copie a lieu une seule fois, à la création du tableau.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "etapes",
+     "texte": "",
+     "elements": [
+      "Ouvrir l'espace, onglet Tableaux.",
+      "Cliquer sur « Créer un tableau ».",
+      "Saisir le nom, et la description si elle est utile.",
+      "Cocher « Tableau privé » pour le réserver à ses participants, ou laisser décoché pour qu'il soit visible par tout l'espace.",
+      "Cliquer sur la vignette du modèle voulu. Le lien Aperçu montre la structure avant de décider.",
+      "Cliquer sur « Créer le tableau »."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "points",
+     "texte": "",
+     "elements": [
+      "Les modèles standards sont fournis avec l'application : tableau vierge, kanban simple, gestion de projet, calendrier éditorial, organisation d'événement, sprint agile, suivi des demandes, recrutement, campagne marketing, objectifs et résultats.",
+      "Les modèles personnalisés sont ceux que votre organisation a construits. Un modèle partagé est proposé à tout le monde, un modèle privé n'est proposé qu'à la personne qui l'a créé.",
+      "Le catalogue est le même dans tous les espaces : un modèle construit ailleurs est disponible ici, sans avoir à le recopier."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "paragraphe",
+     "texte": "Le modèle n'est pas un contrat. Une fois le tableau créé, ses colonnes s'ajoutent, se renomment et se suppriment librement. Dans l'autre sens, modifier, archiver ou supprimer un modèle ne change rien aux tableaux qui en sont issus, puisque leurs colonnes ont été recopiées et ne pointent plus vers lui.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "paragraphe",
+     "texte": "Quel que soit le modèle choisi, une colonne « Instructions du canal » est ajoutée en première position sur tout tableau neuf, sauf si ce réglage a été désactivé pour l'organisation.",
+     "elements": [],
+     "ecran": ""
+    }
+   ]
+  },
+  {
+   "cle": "console-support-prendre-et-rendre-un-fil",
+   "slug": "prendre-et-rendre-un-fil-de-support",
+   "titre": "Prendre une demande de support en charge, et la rendre",
+   "extrait": "Prendre une demande vous en désigne responsable et la passe en cours. La rendre se fait par la liste Responsable.",
+   "rubrique": "console-file-de-support",
+   "application_code": "console",
+   "cle_ecran": "console.support",
+   "ordre": 10,
+   "cote": "editeur",
+   "visibilite": "membres",
+   "permission_requise": "editor.support.repondre",
+   "module_requis": null,
+   "blocs": [
+    {
+     "type": "paragraphe",
+     "texte": "Une demande sans responsable n'appartient à personne, et l'indicateur « Sans responsable » de la file la compte. La prendre en charge, c'est y poser votre nom pour que les autres opérateurs sachent qu'elle est traitée.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "etapes",
+     "texte": "",
+     "elements": [
+      "Ouvrir Support, puis la demande dans la liste.",
+      "Cliquer sur « Prendre en charge ». Le bouton n'apparaît que si personne n'est déjà responsable.",
+      "Vérifier que la liste Responsable porte bien votre adresse."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "paragraphe",
+     "texte": "Prendre en charge fait deux choses en une seule action : vous devenez responsable, et l'état de la demande passe à « En cours ».",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "points",
+     "texte": "",
+     "elements": [
+      "Pour rendre la demande à la file, ouvrir la liste Responsable et choisir « Sans responsable ».",
+      "Pour la passer à quelqu'un d'autre, choisir son adresse dans la même liste. Elle ne propose que les opérateurs de l'éditeur autorisés à répondre, et actifs.",
+      "Rendre une demande ne remet pas son état en arrière. Si elle était « En cours », elle le reste. L'état se change à part, par la liste État."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "avertissement",
+     "texte": "Envoyer une réponse sur une demande sans responsable vous en désigne responsable automatiquement, et fait passer son état à « En attente », ou à « Clos » si la case de clôture est cochée. Il n'y a donc pas de façon de répondre sans prendre la demande. Si l'envoi échoue, la réponse est conservée mais marquée non remise, et le demandeur n'a rien reçu.",
+     "elements": [],
+     "ecran": ""
+    }
+   ]
+  },
+  {
+   "cle": "console-suspendre-une-organisation",
+   "slug": "suspendre-une-organisation",
+   "titre": "Suspendre une organisation, et ce que le client voit alors",
+   "extrait": "La suspension exige un motif, parce que ce motif est exactement ce que le client s'entendra répondre.",
+   "rubrique": "console-parc-et-mise-en-service",
+   "application_code": "console",
+   "cle_ecran": "console.organisations",
+   "ordre": 30,
+   "cote": "editeur",
+   "visibilite": "membres",
+   "permission_requise": "editor.tenants.suspendre",
+   "module_requis": null,
+   "blocs": [
+    {
+     "type": "etapes",
+     "texte": "",
+     "elements": [
+      "Ouvrir Organisations clientes. Les organisations suspendues sont remontées en tête de liste, avant celles en évaluation, puis les actives.",
+      "Cliquer sur la ligne de l'organisation pour déplier sa fiche.",
+      "Saisir le motif dans le champ prévu. Le bouton reste inactif tant que le motif fait moins de trois caractères.",
+      "Cliquer sur Suspendre."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "paragraphe",
+     "texte": "Le motif n'est pas une formalité. La base refuse une suspension qui n'en porte pas, et la fiche affiche ensuite ce motif avec sa date. C'est ce qui rend le blocage explicable le jour où le client appelle. La personne qui a suspendu est enregistrée elle aussi, et le mouvement est écrit au journal.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "paragraphe",
+     "texte": "À partir de là, toute demande arrivant sur un domaine rattaché à cette organisation est refusée par le serveur, avant même d'atteindre la moindre donnée. La réponse porte le code de l'organisation et invite à contacter l'éditeur pour rétablir l'accès. Selon l'application ouverte, ce texte est affiché tel quel ou remplacé par un refus générique.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "points",
+     "texte": "",
+     "elements": [
+      "Aucune donnée n'est effacée. La suspension ferme l'accès, elle ne détruit rien.",
+      "Les sondes de santé et le document décrivant l'interface de programmation continuent de répondre : une suspension ne doit pas ressembler à une panne de la plateforme.",
+      "Réactiver se fait par le bouton Activer de la même fiche, qui efface du même coup le motif, la date et l'auteur de la suspension.",
+      "Résilier est un troisième état, distinct de la suspension, et n'exige pas de motif."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "avertissement",
+     "texte": "La suspension n'a d'effet que si un domaine est rattaché à cette organisation. Tant qu'aucune organisation n'a de domaine rattaché, la plateforme reste en mode de transition et sert la base historique sans consulter l'état : l'organisation resterait joignable malgré la suspension. Vérifier le rattachement du domaine avant de compter sur la suspension.",
+     "elements": [],
+     "ecran": ""
+    }
+   ]
+  }
+ ]
+}

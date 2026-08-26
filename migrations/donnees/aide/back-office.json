@@ -1,0 +1,139 @@
+{
+ "rubriques": [
+  {
+   "code": "back-office-membres",
+   "application_code": "back-office",
+   "titre": "Inscriptions et dossiers",
+   "titre_en": "Registrations and files",
+   "description": "Suivre un dossier d inscription de sa creation a sa validation, et traiter les fiches qui se ressemblent.",
+   "ordre": 20,
+   "cote": "client"
+  },
+  {
+   "code": "back-office-systeme",
+   "application_code": "back-office",
+   "titre": "Reglages de la plateforme",
+   "titre_en": "Platform settings",
+   "description": "Les reglages techniques administrables sans redeploiement, a commencer par l acheminement des courriels.",
+   "ordre": 60,
+   "cote": "client"
+  }
+ ],
+ "articles": [
+  {
+   "cle": "back-office-valider-une-inscription",
+   "slug": "valider-une-inscription",
+   "titre": "Valider une inscription, et ce qui arrive ensuite à la personne",
+   "extrait": "Les files d'attente, la décision à prendre, et tout ce que la validation déclenche automatiquement.",
+   "rubrique": "back-office-membres",
+   "application_code": "back-office",
+   "cle_ecran": "back-office.inscriptions",
+   "ordre": 10,
+   "cote": "client",
+   "visibilite": "membres",
+   "permission_requise": "inscriptions.gerer",
+   "module_requis": null,
+   "blocs": [
+    {
+     "type": "paragraphe",
+     "texte": "L'écran range les dossiers par étape, avec un compteur sur chaque onglet : inscriptions en cours (le compte existe, le formulaire n'est pas revenu), formulaires reçus, dossiers à valider, dossiers validés. Un onglet séparé liste les inscriptions bloquées.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "etapes",
+     "texte": "",
+     "elements": [
+      "Ouvrir l'onglet « Formulaires reçus » ou « À valider ».",
+      "Cliquer sur « Voir le dossier » et contrôler l'identité, les pièces jointes et les informations déclarées.",
+      "Choisir « Approuver », « Modif. » pour demander une correction, ou « Refuser ».",
+      "Pour une correction ou un refus, écrire le motif : il est transmis tel quel à la personne. Pour une correction, cocher aussi les champs à reprendre, sinon la confirmation reste inactive."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "points",
+     "texte": "",
+     "elements": [
+      "Les trois boutons de décision n'apparaissent que sur un dossier que la personne a effectivement renvoyé. Sur une file en lecture, seuls le dossier et l'historique des corrections sont accessibles.",
+      "À l'approbation, le dossier passe au statut validé et l'identité est marquée vérifiée.",
+      "Un message part vers la personne par les canaux dont elle dispose : dans l'application, par courriel et par messagerie instantanée.",
+      "Si le pays déclaré exige une attestation signée à la main, une demande de retour est ouverte automatiquement avec une échéance à trente jours, et elle apparaît dans le suivi des demandes.",
+      "La fenêtre de conservation des données démarre à cette même date."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "paragraphe",
+     "texte": "Une correction demandée ne supprime rien. Les informations déjà saisies restent en place et la personne ne reprend que les champs cochés. Si la photo d'identité fait partie des champs cochés, elle est déverrouillée pour que le remplacement soit réellement possible.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "avertissement",
+     "texte": "Tant que le dossier n'est pas approuvé, la personne ne reçoit aucun message de fonctionnement : ni convocation, ni relance d'activité. Seuls les messages d'accueil et de sécurité passent. Un dossier oublié dans une file est donc quelqu'un qui ne reçoit plus rien.",
+     "elements": [],
+     "ecran": ""
+    }
+   ]
+  },
+  {
+   "cle": "back-office-fournisseur-envoi-courriels",
+   "slug": "fournisseur-envoi-courriels",
+   "titre": "Paramétrer le fournisseur d'envoi des courriels",
+   "extrait": "Renseigner, tester, puis activer. Dans cet ordre, et sans redéploiement.",
+   "rubrique": "back-office-systeme",
+   "application_code": "back-office",
+   "cle_ecran": "back-office.fournisseurs-email",
+   "ordre": 10,
+   "cote": "client",
+   "visibilite": "membres",
+   "permission_requise": "integrations.administrer",
+   "module_requis": null,
+   "blocs": [
+    {
+     "type": "paragraphe",
+     "texte": "L'ordre des blocs à l'écran est l'ordre de l'opération : l'identité de l'expéditeur d'abord, la configuration du fournisseur ensuite, le test, et l'activation en dernier. Un fournisseur incomplet ne peut pas être activé, et le test passe par le fournisseur choisi seul, sans repli sur celui qui envoie aujourd'hui.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "etapes",
+     "texte": "",
+     "elements": [
+      "Ouvrir le bloc de l'identité de l'expéditeur : renseigner l'adresse expéditrice, le nom affiché et l'adresse de réponse, puis enregistrer. Ces valeurs sont communes à tous les fournisseurs et survivent à un changement.",
+      "Sur la carte du fournisseur voulu, cliquer sur « Configurer », remplir les champs, puis enregistrer. Pour un envoi par boîte aux lettres, un bouton de préréglage remplit le serveur et le port sans rien taper.",
+      "Renseigner au besoin, en bas de page, l'adresse qui reçoit les tests. Laissée vide, le test part vers votre propre adresse de connexion.",
+      "Cliquer sur « Envoyer un test », puis attendre le message.",
+      "Vérifier la réception, et seulement là cliquer sur « Activer comme principal ».",
+      "Éventuellement, placer un second fournisseur en secours : il ne sert que si le principal échoue."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "points",
+     "texte": "",
+     "elements": [
+      "Un secret n'est jamais renvoyé à l'écran. Son champ reste vide, et un enregistrement laissant ce champ vide conserve la valeur déjà en place.",
+      "Une carte affiche « Incomplet » et nomme les champs qui manquent tant qu'il en manque un.",
+      "L'activation est refusée si un champ obligatoire manque : le message nomme le champ à renseigner.",
+      "Deux alertes remontent en haut de page : une adresse expéditrice qui sert aussi de compte de connexion, et l'absence d'adresse de réponse."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "paragraphe",
+     "texte": "Un envoi par boîte aux lettres ordinaire subit un quota journalier bas, n'accepte souvent d'envoyer que depuis sa propre adresse, et ne remonte aucun statut de livraison. Il convient au secours et aux messages de service, pas à un envoi général à tout le monde.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "avertissement",
+     "texte": "Le fournisseur « Aucun envoi (journal) » n'envoie rien du tout. Activé comme principal, plus aucun message ne part : ni code de connexion, ni convocation. Il est réservé aux essais techniques.",
+     "elements": [],
+     "ecran": ""
+    }
+   ]
+  }
+ ]
+}

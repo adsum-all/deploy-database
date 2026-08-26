@@ -1,0 +1,149 @@
+{
+ "rubriques": [
+  {
+   "code": "portail-abonnement-modules",
+   "application_code": "portail",
+   "titre": "Abonnement, modules et paiements",
+   "titre_en": "Subscription, modules and payments",
+   "description": "Ce que vous reglez, ce que vous activez, et ou en est chaque mise en place.",
+   "ordre": 10,
+   "cote": "client"
+  },
+  {
+   "code": "portail-acces-et-mots",
+   "application_code": "portail",
+   "titre": "Acces et mots de votre organisation",
+   "titre_en": "Access and wording",
+   "description": "Qui entre dans le portail, et comment votre organisation nomme les choses.",
+   "ordre": 20,
+   "cote": "client"
+  }
+ ],
+ "articles": [
+  {
+   "cle": "portail-retour-paiement",
+   "slug": "lire-la-page-de-retour",
+   "titre": "Je viens d'être redirigé après un paiement : lire la page de retour",
+   "extrait": "Revenir sur cette page ne prouve pas que le règlement est passé. Ce qui s'affiche vient du serveur, qui a lu sa base ou interrogé le fournisseur.",
+   "rubrique": "portail-abonnement-modules",
+   "application_code": "portail",
+   "cle_ecran": "portail.retour",
+   "ordre": 20,
+   "cote": "client",
+   "visibilite": "membres",
+   "permission_requise": null,
+   "module_requis": null,
+   "blocs": [
+    {
+     "type": "paragraphe",
+     "texte": "Arriver sur cette page veut seulement dire que votre navigateur a suivi une redirection. L'état affiché ne vient pas de ce retour : il vient du serveur, qui l'a lu dans sa base ou qui vient de le demander au fournisseur de paiement.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "paragraphe",
+     "texte": "La page se met à jour toute seule, à intervalles qui s'espacent, pendant environ deux minutes. Passé ce délai elle s'arrête et le dit, et un bouton « Vérifier à nouveau » relance une lecture quand vous le voulez.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "points",
+     "texte": "",
+     "elements": [
+      "Paiement reçu : le règlement est confirmé, et la mise en place des modules commence.",
+      "Paiement refusé : le règlement n'a pas abouti et rien n'a été débité.",
+      "Paiement abandonné : vous avez quitté le paiement avant de le confirmer ; votre panier reste disponible.",
+      "Paiement remboursé : ce règlement a été remboursé et aucun module n'a été ouvert.",
+      "Paiement à vérifier : la réponse du fournisseur n'est pas interprétable telle quelle, et une personne la reprend.",
+      "Paiement en cours : la confirmation du fournisseur n'est pas encore arrivée."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "avertissement",
+     "texte": "Ne réglez pas une seconde fois tant que la page n'affiche pas un refus. Sur « Paiement à vérifier » comme sur « Paiement toujours en cours », l'argent est peut-être déjà parti, et un second règlement ferait deux débits pour une seule commande. Votre référence de commande suffit à retrouver le règlement.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "paragraphe",
+     "texte": "Un encadré peut signaler que le fournisseur ne répond pas en ce moment. L'état montré est alors le dernier connu, ce qui ne veut pas dire que votre règlement a échoué. Vous pouvez fermer la page : la facture se mettra à jour toute seule.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "lien_ecran",
+     "texte": "Suivre l'ouverture des modules réglés",
+     "elements": [],
+     "ecran": "portail.deploiements"
+    }
+   ]
+  },
+  {
+   "cle": "portail-ajouter-un-administrateur",
+   "slug": "ajouter-un-administrateur",
+   "titre": "Ajouter un administrateur à mon organisation",
+   "extrait": "Le compte doit déjà exister chez vous, porter un rôle d'administration, et n'administrer aucune autre organisation.",
+   "rubrique": "portail-acces-et-mots",
+   "application_code": "portail",
+   "cle_ecran": "portail.administrateurs",
+   "ordre": 20,
+   "cote": "client",
+   "visibilite": "membres",
+   "permission_requise": null,
+   "module_requis": null,
+   "blocs": [
+    {
+     "type": "paragraphe",
+     "texte": "L'onglet « Accès » liste les comptes qui entrent dans le portail : abonnement, modules, facturation et personnalisation. Ces comptes n'ouvrent pas le back-office de vos membres, qui a ses propres droits.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "etapes",
+     "texte": "",
+     "elements": [
+      "Ouvrir l'onglet « Accès ».",
+      "Relever l'identifiant du compte dans la fiche de la personne, dans votre back-office.",
+      "Saisir cet identifiant et l'adresse électronique de la personne.",
+      "Valider avec « Inviter » : la ligne apparaît aussitôt dans la liste des administrateurs."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "points",
+     "texte": "",
+     "elements": [
+      "« Ce compte administre déjà votre organisation. » : la personne figure déjà dans la liste.",
+      "« Ce compte administre déjà une autre organisation. » : un même compte ne peut pas administrer deux portails ; demandez à la personne un compte distinct pour votre organisation.",
+      "« L'identifiant du compte doit être celui qui figure dans la fiche de la personne, dans votre back-office. » : la valeur saisie n'a pas la forme attendue.",
+      "« Adresse de courriel invalide. » : l'adresse saisie n'est pas exploitable."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "avertissement",
+     "texte": "L'identifiant saisi n'est pas vérifié auprès de votre base : seule sa forme est contrôlée. Un identifiant bien formé mais erroné crée un accès que personne ne peut utiliser, et qu'il faudra retirer ensuite.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "points",
+     "texte": "",
+     "elements": [
+      "Le compte principal ne peut pas être retiré : transférez d'abord ce rôle à un autre compte.",
+      "Le dernier accès actif ne peut pas être retiré : votre organisation doit garder au moins un administrateur.",
+      "Un accès retiré reste affiché, avec sa date de retrait, dans « Accès retirés ». C'est ce que l'on vient vérifier après un incident."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "paragraphe",
+     "texte": "Aucun message n'est envoyé à la personne invitée : prévenez-la vous-même. Elle entre ensuite avec son compte habituel. Il faut en plus qu'elle porte un rôle d'administration dans votre organisation, faute de quoi le portail répond « Réservé aux administrateurs de l'organisation ».",
+     "elements": [],
+     "ecran": ""
+    }
+   ]
+  }
+ ]
+}
