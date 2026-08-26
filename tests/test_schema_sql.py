@@ -87,7 +87,14 @@ def test_table_count(offline_sql: str) -> None:
     # organisation_cliente and licence (0197), organisation_hote (0198),
     # licence_module (0199). Verified against production the same day: 153 live
     # tables, every one of them with row level security enabled, none without.
-    assert offline_sql.count("create table ") == 154
+    # +7 at 0200, the help centre. Named one by one, as this guard demands:
+    # aide_rubrique and aide_article (the corpus), aide_article_version (what was
+    # published, kept as published), aide_ancrage (which article answers which
+    # screen), aide_reglage_local (what an organisation hides or reorders, kept
+    # apart so a republished catalogue cannot crush it), aide_usage (one event
+    # table rather than counters nothing increments) and aide_publication (the
+    # distribution journal, which lives in the editor base and is never shipped).
+    assert offline_sql.count("create table ") == 161
 
 
 def test_audit_partition_count(offline_sql: str) -> None:
@@ -156,7 +163,11 @@ def test_rls_enabled_on_every_table(offline_sql: str) -> None:
     # +7 for the same seven tables of 0196 to 0199. None of them shipped without
     # protection: production shows row level security enabled on all 153 live
     # tables and zero exceptions, which is the invariant this count stands in for.
-    assert offline_sql.count("enable row level security") == 155
+    # +7 at 0200: the seven help tables. Each also gets FORCE ROW LEVEL SECURITY,
+    # which ENABLE alone does not give: the API connects as the schema owner, and
+    # an owner bypasses its own policies unless the table forces them. That is the
+    # gap that would have let a client request read an editor article.
+    assert offline_sql.count("enable row level security") == 162
     # The two counts no longer match, and must not. 0189 enabled the feature on
     # type_evenement, a table created long before without it: that statement has no
     # CREATE TABLE of its own in this schema, so it is one ENABLE more than there are
@@ -191,5 +202,12 @@ def test_rls_role_policies_created(offline_sql: str) -> None:
     # +2 at 0190: select + write on appareil_push.
     # +4 at 0193 and 0194: select + write on direction_rapport_planifie and on
     # motif_absence. Reading is open to any authenticated role; writing is not.
-    assert offline_sql.count("create policy ") == 195
+    # +9 at 0200: read and write on aide_rubrique and aide_article, both gated on
+    # cote = 'client' unless the transaction has declared itself as the editor; one
+    # policy each on aide_article_version and aide_ancrage, restricted to rows whose
+    # article is itself visible, since they carry no side of their own and would
+    # otherwise be a hole; and one each on aide_reglage_local, aide_usage and
+    # aide_publication, which hold no editor content and are closed to anon and
+    # authenticated by the REVOKE above.
+    assert offline_sql.count("create policy ") == 204
     assert "adsum_current_role()" in offline_sql
