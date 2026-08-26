@@ -1,0 +1,210 @@
+{
+ "rubriques": [
+  {
+   "code": "controleur-a-la-porte",
+   "application_code": "controleur",
+   "titre": "À la porte",
+   "titre_en": "At the door",
+   "description": "Les cinq situations qui arrivent vraiment pendant un contrôle.",
+   "ordre": 10,
+   "cote": "client"
+  }
+ ],
+ "articles": [
+  {
+   "cle": "controleur-qr-refuse",
+   "slug": "le-qr-ne-passe-pas",
+   "titre": "Le QR ne passe pas : passer en saisie manuelle",
+   "extrait": "Ce qu'il faut faire quand le code ne se lit pas, sans faire attendre la file.",
+   "rubrique": "controleur-a-la-porte",
+   "application_code": "controleur",
+   "cle_ecran": "controleur.scan",
+   "ordre": 10,
+   "cote": "client",
+   "visibilite": "membres",
+   "permission_requise": null,
+   "module_requis": null,
+   "blocs": [
+    {
+     "type": "paragraphe",
+     "texte": "Un code peut ne pas passer pour trois raisons : l'écran du téléphone est trop sombre ou fissuré, le code a expiré, ou l'appareil qui scanne a une heure fausse. Les trois se traitent de la même façon, et il ne faut pas insister plus de quelques secondes.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "etapes",
+     "texte": "",
+     "elements": [
+      "Toucher « Saisie manuelle ».",
+      "Taper le matricule, ou les premières lettres du nom.",
+      "Choisir la personne dans la liste proposée.",
+      "Valider. Le pointage est enregistré exactement comme s'il avait été scanné."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "avertissement",
+     "texte": "Si le message parle d'un code expiré alors que la personne vient de l'afficher, vérifiez l'heure de l'appareil qui scanne. Une heure fausse refuse des codes valables, et elle en accepte de périmés.",
+     "elements": [],
+     "ecran": ""
+    }
+   ]
+  },
+  {
+   "cle": "controleur-verdict-alerte",
+   "slug": "verdict-alerte",
+   "titre": "Verdict « alerte » : ce que cela veut dire et ce que je fais",
+   "extrait": "Une alerte n'est pas un refus. Le pointage est pris, et quelqu'un devra regarder.",
+   "rubrique": "controleur-a-la-porte",
+   "application_code": "controleur",
+   "cle_ecran": "controleur.scan",
+   "ordre": 20,
+   "cote": "client",
+   "visibilite": "membres",
+   "permission_requise": null,
+   "module_requis": null,
+   "blocs": [
+    {
+     "type": "paragraphe",
+     "texte": "Un verdict « alerte » signale que le dossier de la personne demande une vérification : une inscription encore incomplète, ou une situation qui mérite un regard. Le motif est affiché sous le nom.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "paragraphe",
+     "texte": "Une alerte ne bloque pas l'entrée et n'annule pas le pointage. Votre rôle à la porte est d'enregistrer la présence, pas de statuer sur un dossier.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "etapes",
+     "texte": "",
+     "elements": [
+      "Lire le motif affiché.",
+      "Laisser entrer et passer à la personne suivante.",
+      "Signaler le motif à la personne responsable de l'accueil en fin de séance."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "avertissement",
+     "texte": "Un refus est autre chose : le pointage n'est alors pas enregistré et l'écran l'écrit clairement. Dans ce cas, refaites une saisie manuelle avant de passer au suivant.",
+     "elements": [],
+     "ecran": ""
+    }
+   ]
+  },
+  {
+   "cle": "controleur-hors-ligne",
+   "slug": "sans-reseau",
+   "titre": "Sans réseau, où vont mes pointages",
+   "extrait": "Ils sont gardés sur l'appareil et partent tout seuls au retour du réseau.",
+   "rubrique": "controleur-a-la-porte",
+   "application_code": "controleur",
+   "cle_ecran": "controleur.queue",
+   "ordre": 30,
+   "cote": "client",
+   "visibilite": "membres",
+   "permission_requise": null,
+   "module_requis": null,
+   "blocs": [
+    {
+     "type": "paragraphe",
+     "texte": "Chaque pointage est d'abord écrit sur l'appareil, avant tout envoi. Couper le réseau, recharger la page ou fermer l'application ne perd rien : les pointages en attente restent et repartent dès que la connexion revient.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "paragraphe",
+     "texte": "Le compteur « en attente » indique combien de pointages n'ont pas encore été confirmés par le serveur. Il doit revenir à zéro avant que vous quittiez le poste.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "avertissement",
+     "texte": "Un pointage en attente n'est jamais supprimé automatiquement, même après plusieurs heures. Tant qu'il est là, il doit encore une présence à quelqu'un.",
+     "elements": [],
+     "ecran": ""
+    }
+   ]
+  },
+  {
+   "cle": "controleur-file-bloquee",
+   "slug": "la-file-ne-se-vide-pas",
+   "titre": "La file ne se vide pas alors que je viens de me reconnecter",
+   "extrait": "Presque toujours parce que les pointages en attente ont été saisis par un autre compte.",
+   "rubrique": "controleur-a-la-porte",
+   "application_code": "controleur",
+   "cle_ecran": "controleur.queue",
+   "ordre": 40,
+   "cote": "client",
+   "visibilite": "membres",
+   "permission_requise": null,
+   "module_requis": null,
+   "blocs": [
+    {
+     "type": "paragraphe",
+     "texte": "L'envoi ne concerne que les pointages enregistrés par le compte connecté en ce moment. C'est voulu : sur un poste partagé, sans cette règle, les pointages saisis par une personne seraient enregistrés au nom de la suivante.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "etapes",
+     "texte": "",
+     "elements": [
+      "Vérifier quel compte est connecté.",
+      "Si ce n'est pas celui qui a saisi les pointages en attente, se déconnecter.",
+      "Reconnecter le compte d'origine : la file repart aussitôt.",
+      "Attendre que le compteur « en attente » revienne à zéro."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "paragraphe",
+     "texte": "Si le compte est bien le bon et que rien ne part, c'est le réseau. Le compteur repartira de lui-même, sans aucune manipulation.",
+     "elements": [],
+     "ecran": ""
+    }
+   ]
+  },
+  {
+   "cle": "controleur-passage-de-poste",
+   "slug": "passer-le-poste",
+   "titre": "Passer le poste à un autre contrôleur sans perdre la file",
+   "extrait": "Toujours vider la file avant de changer de compte. C'est la seule règle.",
+   "rubrique": "controleur-a-la-porte",
+   "application_code": "controleur",
+   "cle_ecran": "controleur.queue",
+   "ordre": 50,
+   "cote": "client",
+   "visibilite": "membres",
+   "permission_requise": null,
+   "module_requis": null,
+   "blocs": [
+    {
+     "type": "avertissement",
+     "texte": "Changer de compte avec des pointages en attente les laisse bloqués : ils ne repartiront qu'au retour du compte qui les a saisis.",
+     "elements": [],
+     "ecran": ""
+    },
+    {
+     "type": "etapes",
+     "texte": "",
+     "elements": [
+      "Regarder le compteur « en attente ».",
+      "S'il n'est pas à zéro, attendre qu'il y arrive. Rétablir le réseau si besoin.",
+      "Une fois à zéro seulement, se déconnecter.",
+      "Laisser la personne suivante se connecter avec son propre compte."
+     ],
+     "ecran": ""
+    },
+    {
+     "type": "paragraphe",
+     "texte": "Si le poste doit changer de main dans l'urgence avec des pointages en attente, le plus sûr est de laisser l'appareil en l'état et d'en prendre un second : les pointages bloqués partiront quand le premier contrôleur reprendra la main.",
+     "elements": [],
+     "ecran": ""
+    }
+   ]
+  }
+ ]
+}
