@@ -48,13 +48,20 @@ down_revision = "0199_licence_modules"
 branch_labels = None
 depends_on = None
 
-#: The ten real surfaces. Deliberately a CHECK and not a foreign key to
-#: application(code): that table is the sellable catalogue and knows seven codes,
-#: while help also covers the public site, the console and the client portal,
-#: which are not sold as modules.
+#: The ten real surfaces, plus one that is not a surface at all. Deliberately a
+#: CHECK and not a foreign key to application(code): that table is the sellable
+#: catalogue and knows seven codes, while help also covers the public site, the
+#: console and the client portal, which are not sold as modules.
+#:
+#: "transverse" carries what belongs to no single application: signing in, two
+#: factor authentication, personal data rights. Such an article has to live
+#: somewhere, and filing it under one application would hide it from the nine
+#: others, where the reader is just as likely to be looking for it. The read API
+#: therefore always adds transverse articles to whichever application is asked for.
 SURFACES = (
     "back-office", "collaboration", "pilotage", "direction", "controleur",
     "web-membre", "mobile-membre", "portail", "site", "console",
+    "transverse",
 )
 
 #: Accent folding, identical to the one migration 0191 settled on. The query side
